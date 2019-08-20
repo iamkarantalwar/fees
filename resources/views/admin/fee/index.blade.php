@@ -77,10 +77,13 @@
                         Semester
                      </th>
                      <th>
-                        Last Call
+                        Last Fees
                      </th>
                      <th>
-                        Status
+                        Pending
+                     </th>
+                     <th>
+                        Installment No
                      </th>
                   </tr>
                </thead>
@@ -116,7 +119,7 @@
 <script>
 
 function changeModelRoute(id){
-    var route = "{{ route('admin.calling.create',['enquiry_id'=>':id'])}}";
+    var route = "{{ route('admin.fee.create',['registration_id'=>':id'])}}";
     route = route.replace("%3Aid",id);
     var model = $('#model-route').attr('src',route);
     $('#myModal').modal('show');

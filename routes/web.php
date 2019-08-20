@@ -83,6 +83,15 @@ Route::resource('admin/fee', 'FeeController',
     ]
 ]);
 
+Route::resource('admin/passwordverification','PasswordVerificationController',[
+
+    'names'=>[
+        'index'     =>'admin.password.check',
+        'store'     =>'admin.password.checkauth',
+    ]
+]);
+Route::get('excel/','CallingController@generateExcelSheet');
+
 
 
 

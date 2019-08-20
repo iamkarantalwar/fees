@@ -14,7 +14,7 @@
                 <h2 class="card-title">Add Enquiry</h2>
               </div>
               <div class="card-body">
-                <form action="{{ route('admin.enquiry.store') }}" method="POST">
+                <form action="{{ route('admin.enquiry.store') }}" method="POST" autocomplete="off" id="enquiry_form">
 
                   @csrf
                   <div class="row">
@@ -22,7 +22,7 @@
                     <div class="col-md-4 pr-1">
                       <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" name="name" required placeholder="Enter the name" value="">
+                        <input type="text" class="form-control" id="name"name="name" required placeholder="Enter the name" value="">
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -34,7 +34,19 @@
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label>Phone No</label>
-                        <input type="text" class="form-control" name="phoneno" required placeholder="Enter the phone"  required value="">
+                        <input type="text" class="form-control @if($errors->has('phoneno')) is-invalid @endif 
+                        @if(count($errors)>0 && !$errors->has('phoneno')) is-valid  @endif" name="phoneno" 
+                        required placeholder="Enter the phone"  value="{{ old('phoneno')}}">
+                        @if($errors->has('phoneno'))
+                        <div class="invalid-feedback">
+                            Please Enter  Valid Mobile Number.
+                        </div>
+                        @endif
+                        @if(count($errors)>0 && !$errors->has('phoneno'))                       
+                        <div class="valid-feedback">
+                            Valid Mobile Number
+                        </div>
+                        @endif
                       </div>
                     </div>
                   </div>
@@ -42,13 +54,32 @@
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>College</label>
-                        <input type="text" class="form-control" name="college" required placeholder="Enter the college" value="">
+                        <input type="text" class="form-control" name="college" required placeholder="Enter the college"
+                         value="" list="colleges" >
+                         <datalist id="colleges">
+                          @if(count($colleges)>0)
+                            @foreach($colleges as $college)
+                              <option value="{{ $college->college }}">
+                            @endforeach
+                          @endif
+                         </datalist>
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>Semester</label>
-                        <input type="text" class="form-control" name="semester" required placeholder="Enter the semester" value="">
+                          <select class="form-control" name="semester" placeholder="Enter the semester" id="semester">
+                            <option value="1">1st</option>
+                            <option value="2">2nd</option>
+                            <option value="3">3rd</option>
+                            <?php 
+                              for($i=4;$i<=8;$i++)
+                              {
+                                echo "<option value='".$i."'>".$i."th"."</option>";
+                              }
+                            ?>
+                          </select>
+                        
                       </div>
                     </div>
                   </div>
@@ -106,11 +137,19 @@
 <script src="{{ asset('assets/semantic/dist/semantic.min.js') }}"></script>
 <script src="{{ asset('assets/productjs/enquiry_create.js') }}"></script>
 <script>
+ 
     $('.ui.dropdown')
     .dropdown({
         clearable: true,
         
     }); 
+    $('#semester')
+    .dropdown({
+        clearable: true,
+        placeholder: "Enter The Semester",
+        
+    }); 
+
     $('#course').on('change',function(){
            $.ajax({
                 'url':'{{ route("api.course.getcourse") }}',

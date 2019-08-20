@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Fee;
+use App\Registration;
 use Illuminate\Http\Request;
-
+use \Auth;
+use \Hash;
 class FeeController extends Controller
 {
+    public function __construct()
+{
+    $this->middleware('auth');
+}
+    
     
     public function index()
     {
@@ -14,15 +21,60 @@ class FeeController extends Controller
     }
 
   
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $id = $request->get('registration_id');
+        if ($id != null){
+            $registration = Registration::findOrFail($id);
+            $fees_paid = 0;
+            foreach ($registration->fees as $row) {
+                    $fees_paid += $row->payable_amount;
+            }
+            return view('admin.fee.create',['enquiry'=>$registration,'fees_paid'=>$fees_paid]);
+        }
+        else{
+            return redirect()->back();
+        }
     }
 
   
     public function store(Request $request)
     {
-        //
+      
+        if(Hash::check($request->post('password'),Auth::user()->password))
+        {
+            $balance = 0.00;
+            $reg_id =  $request->post('registration_id');
+            
+            
+            $registration = Registration :: findOrFail($reg_id);
+            if(count($registration->fees)>0){
+                
+              
+               $balance =  $registration->fees->last()->pending_amount - $request->post('payable_amount');
+               
+            }
+            else
+            {
+                $balance = $registration->due_fees - $request->post('payable_amount');
+
+              
+            }
+           
+            $fee = new Fee();
+            $fee->registration_id = $reg_id;
+            $fee->recipt_no = $request->post('recipt_no');
+            $fee->payable_amount = $request->post('payable_amount');
+
+            $fee->pending_amount = $balance;
+            $fee->save();      
+             
+            return redirect()->back()->with('success',"Fees Has been submitted");
+        }
+        else{
+            return redirect()->back()->with('danger',"Check the password");
+        }
+      
     }
 
    

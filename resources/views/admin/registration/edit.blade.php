@@ -108,17 +108,18 @@
                   </div>
                </div>
             </div>
+            
             <div class="row">
                <div class="col-md-6 pr-1">
                   <div class="form-group">
                      <label>Discount</label>
-                     <input type="text" class="form-control" name="discount" required placeholder="Enter the discount" value="{{ $registration->discount }}" >
+                     <input type="text" class="form-control" readonly name="discount" required placeholder="Enter the discount" value="{{ $registration->discount }}" >
                   </div>
                </div>
                <div class="col-md-6 pl-1">
                   <div class="form-group">
                      <label>Extra Charges</label>
-                     <input type="text" class="form-control" name="extra_charges" required placeholder="Enter the extra charges" value="{{ $registration->extra_charges }}" >
+                     <input type="text" class="form-control" readonly  name="extra_charges" required placeholder="Enter the extra charges" value="{{ $registration->extra_charges }}" >
                   </div>
                </div>
             </div>
@@ -126,13 +127,13 @@
                <div class="col-md-6 pr-1">
                   <div class="form-group">
                      <label>Fees</label>
-                     <input type="text" class="form-control" name="fees" required placeholder="Enter the college"  value="{{ $registration->fees }}" >
+                     <input type="text" class="form-control" readonly name="fees" required placeholder="Enter the college"  value="{{ $registration->payable_fees }}" >
                   </div>
                </div>
                <div class="col-md-6 pl-1">
                   <div class="form-group">
                      <label>Total Fees</label>
-                     <input type="text" class="form-control" name="total_fees" required placeholder="Enter the semester" value="{{ $registration->total_fees }}" >
+                     <input type="text" class="form-control" readonly name="total_fees" required placeholder="Enter the semester" value="{{ $registration->total_fees }}" >
                   </div>
                </div>
             </div>

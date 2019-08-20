@@ -6,6 +6,7 @@ use App\Registration;
 use Illuminate\Http\Request;
 use App\Course;
 use App\Enquiry;
+use App\Fee;
 
 class RegistrationController extends Controller
 {
@@ -46,7 +47,7 @@ class RegistrationController extends Controller
     
     public function store(Request $request)
     {
-
+       
         $registration = new Registration();
         $registration->name = $request->post('name');
         $registration->phoneno = $request->post('phoneno');
@@ -57,7 +58,7 @@ class RegistrationController extends Controller
         $registration->narration = $request->post('narration');
         $registration->training_type = $request->post('training_type');
         $registration->extra_context = $request->post('extra_context');
-        $registration->fees = $request->post('fees');
+        $registration->payable_fees = $request->post('fees');
         $registration->discount = $request->post('discount');
         $registration->extra_charges= $request->post('extra_charges');
         $registration->narration = $request->post('narration');
@@ -69,6 +70,14 @@ class RegistrationController extends Controller
         $registration->registration_amount = $request->post('registration_amount');
         $registration->due_fees = $request->post('due_fees');
         $registration->save();
+
+        $fee  = new Fee();
+        $fee->registration_id = $registration->id;
+        $fee->recipt_no = $request->post('reciept_no');
+        $fee->payable_amount = $request->post('registration_amount');
+        $fee->pending_amount =  $request->post('due_fees');
+        $fee->save();
+        
         $courses = array_values($request->post('course'));
         $registration ->courses() ->attach($courses);
 

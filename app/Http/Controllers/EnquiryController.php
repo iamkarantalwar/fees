@@ -23,13 +23,22 @@ class EnquiryController extends Controller
    
     public function create()
     {
+        $colleges = Enquiry::all('college')->unique('college');
+        
         $courses = Course::all();
-        return view('admin.enquiry.create')->with(['courses'=>$courses]);
+        return view('admin.enquiry.create')->with(['courses'=>$courses,'colleges'=>$colleges]);
     }
 
    
     public function store(Request $request)
     {
+        $request->validate([
+            'phoneno' => ['required',
+                        'regex:/^[0-9]+$/']
+        ],[
+            'phoneno'=>'Please Enter The Valid Mobile Number'
+        ]);            
+        
         $enquiry = new Enquiry();
         $enquiry->name = $request->post('name');
         $enquiry->phone_no = $request->post('phoneno');

@@ -23,7 +23,7 @@ class CreateRegistrationsTable extends Migration
             $table->string('semester');
             $table->string('training_type');
             $table->string('extra_context')->nullable();
-            $table->float('fees',8,2);
+            $table->float('payable_fees',8,2);
             $table->float('discount',8,2);
             $table->float('extra_charges',8,2);
             $table->text('narration');

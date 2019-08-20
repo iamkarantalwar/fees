@@ -9,13 +9,15 @@ function appendtablebody(response){
             student.courses.forEach((course)=>{
                 courses+=`${course.name}<br/>`;
             })
-
-            var last_call = student.callings.pop();
+            let installment_no = student.fees.length == 1 ? "Registration Only": student.length;
+            var last_fees = student.fees.pop();
            
-            tbody +=`<tr class='cursor' onclick="changeModelRoute(${student.id})"><td>${srno}</td><td>${student.name}</td><td>${student.phone_no}</td>
+          //  var pending_amount = last_fees == undefined ? student.total_fees-student.registration_amount : 'dasda wait';
+            tbody +=`<tr class='cursor' onclick="changeModelRoute(${student.id})"><td>${srno}</td><td>${student.name}</td><td>${student.phoneno}</td>
                         <td>${student.college}</td><td>${courses}</td><td>${student.semester}</td>
-                        <td>${last_call!=undefined ? last_call.created_at:"No Call Yet"}</td>
-                        <td>${last_call!=undefined ? last_call.status:"Still Pending"}</td>
+                        <td>${last_fees.payable_amount}</td>
+                        <td>${last_fees.pending_amount}</td>
+                        <td>${installment_no}</td>
                     </tr>`;   
                     srno ++;  
   
@@ -25,7 +27,7 @@ function appendtablebody(response){
 }
 
 $(document).ready((e)=>{
-    
+   
     $.ajax({
         url:window.route.fetchstudents,
         method: "GET"
@@ -36,6 +38,7 @@ $(document).ready((e)=>{
 
         }).done((response)=>{
             
+            console.log(response);
             appendtablebody(response);
         })
 

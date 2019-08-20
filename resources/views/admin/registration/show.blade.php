@@ -115,7 +115,7 @@
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Fees</label>
-                        <input type="text" class="form-control" name="fees" required placeholder="Enter the college"  value="{{ $registration->fees }}" disabled>
+                        <input type="text" class="form-control" name="fees" required placeholder="Enter the college"  value="{{ $registration->payable_fees }}" disabled>
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
