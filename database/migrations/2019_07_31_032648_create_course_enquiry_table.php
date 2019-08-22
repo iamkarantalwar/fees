@@ -15,8 +15,11 @@ class CreateCourseEnquiryTable extends Migration
     {
         Schema::create('course_enquiry', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('course_id');
-            $table->bigInteger('enquiry_id');
+           
+            $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('enquiry_id');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('restrict');
+            $table->foreign('enquiry_id')->references('id')->on('enquiries')->onDelete('restrict');
             $table->timestamps();
         });
     }

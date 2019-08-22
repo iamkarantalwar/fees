@@ -15,9 +15,10 @@ class CreateTableContextCourse extends Migration
     {
         Schema::create('context_course', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('context_id');
-            $table->string('course_id');
-            
+            $table->unsignedBigInteger('context_id');
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('context_id')->references('id')->on('contexts')->onDelete('restrict');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('restrict');
             $table->timestamps();
         });
     }

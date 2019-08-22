@@ -83,6 +83,20 @@ Route::resource('admin/fee', 'FeeController',
     ]
 ]);
 
+Route::resource('admin/college', 'CollegeController',
+[
+   'names'=>[
+        'index'     =>'admin.college.index',
+        'create'    =>'admin.college.create',
+        'store'     =>'admin.college.store',
+        'edit'      =>'admin.college.edit',
+        'destroy'   =>'admin.college.destroy',
+        'update'    =>'admin.college.update',
+        'show'      =>'admin.college.show',
+       
+    ]
+]);
+
 Route::resource('admin/passwordverification','PasswordVerificationController',[
 
     'names'=>[
@@ -90,7 +104,7 @@ Route::resource('admin/passwordverification','PasswordVerificationController',[
         'store'     =>'admin.password.checkauth',
     ]
 ]);
-Route::get('excel/','CallingController@generateExcelSheet');
+Route::get('excel/','ExcelController@enquiryListWithCalls')->name('excel.enquiryListWithCalls');
 
 
 

@@ -1,15 +1,13 @@
 @extends('admin.layout')
 @section('context')
-@if(Session::has('success'))
-<script>
-    demo.showNotification('top','center','<b>Context</b> has been Added.','primary')
-</script>
-@endif
-@if(Session::has('danger')) 
-<script>  
-    demo.showNotification('top','center','<b>Context</b> has been Deleted.','danger')
-</script>
-@endif
+@foreach (['danger', 'warning', 'success', 'info'] as $msg)
+    @if(Session::has($msg))
+    <script>
+      demo.showNotification('top','center','{{ Session::get($msg) }}','{{ $msg }}')
+    </script>
+   
+    @endif
+  @endforeach
 <div class="col-md-12" id="context" style="display:none;">
             <div class="card card-user">
               <div class="card-header">
@@ -81,10 +79,10 @@
                           </td>
 
                           <td>
-                            <form action="{{ route('admin.context.destroy',[''=>$context->id]) }}" method="POST">
+                            <form class="deleteform" action="{{ route('admin.context.destroy',[''=>$context->id]) }}" method="POST">
                               @csrf
                               @method('DELETE')                           
-                              <button type="submit" class="btn btn-outline-danger">Delete Context</button>
+                              <button type="submit"  class="btn btn-outline-danger">Delete Context</button>
                             </td>
                             </form>
                       </tr>
@@ -101,6 +99,26 @@
   $('#addcon').on('click',function(){
       $('#context').toggle();
   });
+  $('.deleteform').on('submit',function(e){
+
+e.preventDefault();
+swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this context!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+})
+    .then((willDelete) => {
+    if (willDelete) {
+        
+        $(this).submit();
+    } else {
+        swal("Your context is safe!");
+        return false;
+    }
+    });
+});
   </script>
 @endsection
 

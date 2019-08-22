@@ -60,16 +60,22 @@ class FeeController extends Controller
 
               
             }
-           
-            $fee = new Fee();
-            $fee->registration_id = $reg_id;
-            $fee->recipt_no = $request->post('recipt_no');
-            $fee->payable_amount = $request->post('payable_amount');
+            
+            if (floatval($balance) >= 0 )
+            {
+                $fee = new Fee();
+                $fee->registration_id = $reg_id;
+                $fee->recipt_no = $request->post('recipt_no');
+                $fee->payable_amount = $request->post('payable_amount');
 
-            $fee->pending_amount = $balance;
-            $fee->save();      
-             
-            return redirect()->back()->with('success',"Fees Has been submitted");
+                $fee->pending_amount = $balance;
+                $fee->save();      
+                
+                return redirect()->back()->with('success',"Fees Has been submitted");
+            }
+            else{
+                return redirect()->back()->with('danger',"This ammount is not acceptible.");
+            }
         }
         else{
             return redirect()->back()->with('danger',"Check the password");

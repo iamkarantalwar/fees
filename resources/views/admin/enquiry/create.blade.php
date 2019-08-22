@@ -53,17 +53,16 @@
                   <div class="row">
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
-                        <label>College</label>
-                        <input type="text" class="form-control" name="college" required placeholder="Enter the college"
-                         value="" list="colleges" >
-                         <datalist id="colleges">
-                          @if(count($colleges)>0)
+                        <label>College Name</label>
+                        <select id="college" class="ui search dropdown col-md-12" name="college">
+                        @if(count($colleges)>0)
                             @foreach($colleges as $college)
-                              <option value="{{ $college->college }}">
+                              <option value="{{ $college->college_name }}">{{ $college->college_name }}</option>
                             @endforeach
                           @endif
-                         </datalist>
-                      </div>
+                        </select>
+                        </div>          
+
                     </div>
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
@@ -121,7 +120,7 @@
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Refrence By</label>
-                        <input type="text" class="form-control" placeholder="" required="" value="" name="refrence">
+                        <input type="text" class="form-control" placeholder="" value="" name="refrence">
                       </div>
                     </div>
                   </div>
@@ -140,6 +139,10 @@
  
     $('.ui.dropdown')
     .dropdown({
+        clearable: true,
+        
+    }); 
+    $('#college').dropdown({
         clearable: true,
         
     }); 

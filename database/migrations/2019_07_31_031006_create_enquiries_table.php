@@ -22,7 +22,7 @@ class CreateEnquiriesTable extends Migration
             $table->string('college');
             $table->string('duration'); 
             $table->text('narration');  
-            $table->string('refrence');      
+            $table->string('refrence')->nullable();      
             $table->timestamps();
         });
     }

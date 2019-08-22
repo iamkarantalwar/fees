@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Course;
 use App\Enquiry;
 use App\Fee;
+use App\College;
 
 class RegistrationController extends Controller
 {
@@ -28,19 +29,20 @@ class RegistrationController extends Controller
     {    
         $enquiryid = $request->get('enquiryid');
        
-      
+        $colleges = College::all();
         if ($enquiryid!=null)
          {
 
            $enquiry = Enquiry::findOrFail($enquiryid);       
             $courses = Course::all();
             return view('admin.registration.create')->with(['courses'=>$courses,
-                                                            'enquiry'=>$enquiry]);
+                                                            'enquiry'=>$enquiry,
+                                                            'colleges'=>$colleges]);
          }
          else
          {
             $courses = Course::all();
-            return view('admin.registration.create')->with(['courses'=>$courses]);
+            return view('admin.registration.create')->with(['courses'=>$courses,'colleges'=>$colleges]);
          }
     }
 
@@ -97,6 +99,7 @@ class RegistrationController extends Controller
    
     public function edit(Registration $registration)
     {
+        $colleges = College::all();
         $courses = Course::all();
         $registration_courses =  $registration->courses;
         $course_context = $registration->courses->first()->contexts;
@@ -106,7 +109,8 @@ class RegistrationController extends Controller
                                                      'courses'=>$courses,
                                                       'registration_courses'=>$registration_courses,
                                                       'course_context'=>$course_context,
-                                                      'registration_context'=> $registration_context
+                                                      'registration_context'=> $registration_context,
+                                                      'colleges'=>$colleges
                                                   ]);
     }
 

@@ -17,7 +17,8 @@ class CreateCallingsTable extends Migration
             $table->bigIncrements('id');
             $table->String('status');
             $table->String('narration');
-            $table->bigInteger('enquiry_id');
+            $table->unsignedBigInteger('enquiry_id');
+            $table->foreign('enquiry_id')->references('id')->on('enquiries')->onDelete('restrict');           
             $table->timestamps();
         });
     }

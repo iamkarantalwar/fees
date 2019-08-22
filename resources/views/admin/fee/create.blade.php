@@ -167,11 +167,14 @@
                         Date And Time
                      </th>
                      <th>
+                        Recipt Number
+                     </th>
+                     <!-- <th>
                         Edit
                      </th>
                      <th>
                         Delete
-                     </th>
+                     </th> -->
                   </tr>
                </thead>
                <tbody> 
@@ -186,7 +189,7 @@
                         <td>{{ $fee->payable_amount }}</td>
                         <td>{{ $fee->pending_amount }}</td>
                         <td>{{ $fee->created_at }}</td>
-                        <td>mkm</td>
+                        <td>{{ $fee->recipt_no }}                   
 
                   </tr>
                   @endforeach 

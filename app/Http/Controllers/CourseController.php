@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Context;
 use Illuminate\Http\Request;
-
+use Exception;
 class CourseController extends Controller
 {
     public function __construct()
@@ -88,10 +88,21 @@ class CourseController extends Controller
    
     public function destroy(Course $course)
     {
-        $course->contexts()->detach();
-        $course->delete();
-        return redirect()->route('admin.course.index',$course->id)
-                         ->with('danger','Course has been delete.');
+       
+        try
+        {  
+            $course->contexts()->detach();
+            $course->delete();
+           
+            return redirect()->route('admin.course.index',$course->id)
+                             ->with('danger','Course has been delete.');
+        }
+        catch(Exception $e)
+        {   
+            
+            return redirect()->back()->with('danger','You cannot delete this course.It is associated with other fields.');
+        }
+       
     }
 
     

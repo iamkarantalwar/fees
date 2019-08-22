@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Course;
 use App\Enquiry;
-
+use App\College;
+use Exception;
 class EnquiryController extends Controller
 {
     public function __construct()
@@ -15,7 +16,7 @@ class EnquiryController extends Controller
     }
     public function index()
     {
-       
+        
         $enquiries = Enquiry::all();
         return view('admin.enquiry.index')->with(['enquiries'=>$enquiries]);
     }
@@ -23,8 +24,8 @@ class EnquiryController extends Controller
    
     public function create()
     {
-        $colleges = Enquiry::all('college')->unique('college');
         
+        $colleges = College::all();
         $courses = Course::all();
         return view('admin.enquiry.create')->with(['courses'=>$courses,'colleges'=>$colleges]);
     }
@@ -87,6 +88,7 @@ class EnquiryController extends Controller
    
     public function edit($id)
     {
+       $colleges = College::all();
        $enquiry = Enquiry::findOrFail($id);
         
         $courses = Course::all();        
@@ -109,6 +111,7 @@ class EnquiryController extends Controller
         
         return view('admin.enquiry.edit')->with(['courses'=>$courses_detail,
                                                  'enquiry'=>$enquiry,
+                                                 'colleges'=>$colleges
                                                 ]);
     }
 
@@ -134,9 +137,19 @@ class EnquiryController extends Controller
   
     public function destroy($id)
     {
-        $enquiry = Enquiry::findOrFail($id);
-        $enquiry->delete();
-        return redirect()->route('admin.enquiry.index')
-                         ->with('danger','Enquiry has been deleted.');
+        try
+        {  
+          
+            $enquiry = Enquiry::findOrFail($id);
+            $enquiry->delete();
+            return redirect()->route('admin.enquiry.index')
+                             ->with('danger','Enquiry has been deleted.');
+        }
+        catch(Exception $e)
+        {   
+            
+            return redirect()->back()->with('danger','You cannot delete this enquiry.It is associated with other fields.');
+        }
+      
     }
 }

@@ -1,80 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Calling;
 use Illuminate\Http\Request;
-use App\Enquiry;
-
-
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-class CallingController extends Controller
+
+use App\Enquiry;
+
+class ExcelController extends Controller
 {
-   
-    public function index()
+
+    public function enquiryListWithCalls(Request $request)
     {
-    
-        return view('admin.calling.new');
-    }
-
-    
-    public function create(Request $request)
-    {
-        $id = $request->get('enquiry_id');
-        if ($id != null){
-            $enquiry = Enquiry::findOrFail($id);
-            return view('admin.calling.create',['enquiry'=>$enquiry]);
-        }
-        else{
-            return redirect()->back();
-        }
-       
-    }
-
-    public function store(Request $request)
-    {
-        $call = new Calling();
-        $call->status = $request->post('status');
-        $call->narration = $request->post('narration');
-        $call->enquiry_id = $request->post('enquiry_id');
-        $call->save();
-        return redirect()->back()->with('success','Call has been added');
-    }
-
-    
-    public function show(Calling $calling)
-    {
-        return redirect()->back();
-    }
-
-    public function edit(Calling $calling)
-    {
-        return redirect()->back();
-    }
-
-  
-    public function update(Request $request, Calling $calling)
-    {
-        $calling->narration = $request->post('narration');
-        $calling->status = $request->post('status');
-        $calling->save();
-        return redirect()->back()->with('primary',"Call has been updated");
-    }
-
-   
-    public function destroy(Calling $calling)
-    {
-        $calling->delete();
-        return redirect()->back()->with('danger',"Call has bee deleted.");
-    }
-
-    public function generateExcelSheet()
-    {
-
-
+        
+            
             $object = new Spreadsheet();
-
             $object->setActiveSheetIndex(0);
 
             $table_columns = array("Id",  "Name", "College","Semester", "Mobile","Narration","1st Call Time","1st Call Narration",
@@ -89,13 +29,11 @@ class CallingController extends Controller
                 $style = ['font'=>['size'=>12,'bold'=>true,'color'=>['rgb'=>'ff0000']]];
                 $object->getActiveSheet()->getStyle('A1:O1')->applyFromArray($style);
                 $object->getActiveSheet()->setCellValueByColumnAndRow($column, 1, $field);
-
                 $column++;
             }
            
             
-            $enquiries = Enquiry::all();
-
+            $enquiries = Enquiry::orWhere('college',$request->college)->orWhere('semester',$request->semester);
             $excel_row = 2;
 
             foreach($enquiries as $row)
@@ -121,8 +59,18 @@ class CallingController extends Controller
             foreach (range(0, $nCols) as $col) {
                 $object->getActiveSheet()->getColumnDimensionByColumn($col)->setAutoSize(true);                
             }
-            $writer = new Xlsx($object);
-           
-            $writer->save('helloworld.xlsx');
+            ob_clean();
+          
+            $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($object, "Xlsx");
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="file.xlsx"');
+            $writer->save("php://output");
+        
     }
+
+
+
 }
+
+
+?>

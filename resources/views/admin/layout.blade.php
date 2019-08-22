@@ -30,16 +30,14 @@
         Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
     -->
       <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+        <a href="http://www.o7services.com" class="simple-text logo-mini">
           <div class="logo-image-small">
             <img src="{{ asset('assets/img/logo-small.png') }}">
           </div>
         </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
-          <!-- <div class="logo-image-big">
-            <img src="{{ asset('assets/img/logo-big.png') }}">
-          </div> -->
+        <a class="simple-text logo-normal">
+          {{ Auth::user()->name }}
+         
         </a>
       </div>
        <?php $current_route = Route::currentRouteName(); ?>
@@ -82,10 +80,16 @@
               <p>Enquiry Calling List</p>
             </a>
           </li>
-         <li class="{{ Str::is('admin.calling.*',$current_route) ? 'active':''}}">
+         <li class="{{ Str::is('admin.fee.*',$current_route) ? 'active':''}}">
             <a href="{{ route('admin.fee.index') }}">
               <i class="nc-icon nc-caps-small"></i>
               <p>Fees Section</p>
+            </a>
+        </li>
+        <li class="{{ Str::is('admin.college.*',$current_route) ? 'active':''}}">
+            <a href="{{ route('admin.college.index') }}">
+              <i class="nc-icon nc-laptop"></i>
+              <p>College Section</p>
             </a>
           </li>
      <!--       <li class="active-pro">
@@ -109,7 +113,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Paper Dashboard 2</a>
+            <a class="navbar-brand" href="#">O7services Fees</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -119,7 +123,7 @@
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <form>
               <div class="input-group no-border">
-                <input type="text" value="" class="form-control" placeholder="Search...">
+                <input type="text" value="" class="form-control" placeholder="Search..." id="searchbox">
                 <div class="input-group-append">
                   <div class="input-group-text">
                     <i class="nc-icon nc-zoom-split"></i>
@@ -127,35 +131,19 @@
                 </div>
               </div>
             </form>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav">                      
+           
               <li class="nav-item">
-                <a class="nav-link btn-magnify" href="#pablo">
-                  <i class="nc-icon nc-layout-11"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </a>
-              </li>
-              <li class="nav-item btn-rotate dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="nc-icon nc-bell-55"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Some Actions</span>
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-rotate" href="#pablo">
+              <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                
+                <button class="nav-link btn-rotate" type="submit">
                   <i class="nc-icon nc-settings-gear-65"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Account</span>
                   </p>
                 </a>
+                </form>
               </li>
             </ul>
           </div>
@@ -181,7 +169,8 @@
   <script src="{{ asset('assets/js/paper-dashboard.min.js?v=2.0.0') }}" type="text/javascript"></script>
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
   <script src="{{ asset('assets/demo/demo.js') }}"></script>
-
+  <!-- SWEET ALERT -->
+  <script src="{{ asset('assets/sweetalert.min.js') }}"></script>
  
       <div class="content">
         @yield('context')
@@ -189,7 +178,7 @@
       <footer class="footer footer-black  footer-white ">
         <div class="container-fluid">
           <div class="row">
-            <nav class="footer-nav">
+            <!-- <nav class="footer-nav">
               <ul>
                 <li>
                   <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>
@@ -201,13 +190,13 @@
                   <a href="https://www.creative-tim.com/license" target="_blank">Licenses</a>
                 </li>
               </ul>
-            </nav>
+            </nav> -->
             <div class="credits ml-auto">
               <span class="copyright">
                 ©
                 <script>
                   document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
+                </script>, made with <i class="fa fa-heart heart"></i><b> by Karan Talwar</b>
               </span>
             </div>
           </div>
@@ -231,5 +220,12 @@
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
   <script src="{{ asset('assets/demo/demo.js') }}"></script>
 </body>
-
+<script>
+    $("#searchbox").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("tbody tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+</script>
 </html>

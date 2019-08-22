@@ -11,7 +11,7 @@
          <h5 class="card-title">Search Enquiry</h5>
       </div>
       <div class="card-body">
-         <form>
+         <form action="{{ route('excel.enquiryListWithCalls') }}">
             <div class="row">
                <div class="col-md-6 pr-1">
                   <div class="form-group">
@@ -43,6 +43,7 @@
             <div class="row">
                <div class="update ml-auto mr-auto">
                   <button type="button" id="searchstudents" class="btn btn-primary btn-round">Search Students</button>
+                  <button type="submit" value="" class="btn btn-success btn-round">Generate Excel</button>
                </div>
                <button type="submit" style="display:none;"></button>
             </div>
@@ -53,6 +54,7 @@
 <div class="card">
    <div class="card-header">
       <h2 class="pull-left">Enquiry Callings List</h2>
+    
       <div class="card-body">
          <div class="table-responsive">
             <table class="table">

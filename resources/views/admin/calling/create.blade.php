@@ -68,6 +68,7 @@
    <div class="card card-user" id="editform" style="display:none">
       <div class="card-header">
          <h5 class="card-title">Edit Call Details</h5>
+         
       </div>
       <div class="card-body">
          <form method="POST" action="" >
@@ -124,7 +125,8 @@
    </div>
    <div class="row">
    <div class="card-header col-md-12">
-      <h2 class="pull-left">Call Details</h2>
+ 
+      <h2 class="pull-left">Call Details (+91 {{ $enquiry->phone_no }})</h2>
      
       <button class="btn btn-outline-success pull-right" id="addcall" style="display:none;">
                Add Call

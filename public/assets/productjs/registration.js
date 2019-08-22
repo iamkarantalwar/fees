@@ -9,9 +9,9 @@ function appendtablebody(response){
             student.courses.forEach((course)=>{
                 courses+=`${course.name}<br/>`;
             })
-            let installment_no = student.fees.length == 1 ? "Registration Only": student.length;
+            let installment_no = student.fees.length == 1 ? "Registration Only": student.fees.length;
             var last_fees = student.fees.pop();
-           
+            
           //  var pending_amount = last_fees == undefined ? student.total_fees-student.registration_amount : 'dasda wait';
             tbody +=`<tr class='cursor' onclick="changeModelRoute(${student.id})"><td>${srno}</td><td>${student.name}</td><td>${student.phoneno}</td>
                         <td>${student.college}</td><td>${courses}</td><td>${student.semester}</td>

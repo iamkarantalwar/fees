@@ -41,18 +41,43 @@
             <input type="hidden" name="enquiry_id" value="{{ !empty($enquiry) ? $enquiry->id :'' }}">
             <div class="row">
                <div class="col-md-6 pr-1">
-                  <div class="form-group">
-                     <label>College</label>
-                     <input type="text" class="form-control" name="college" required placeholder="Enter the college" 
-                        value="{{ !empty($enquiry) ? $enquiry->college :'' }}">
-                  </div>
+               <div class="form-group">
+                        <label>College Name</label>
+                        <select id="college" class="ui search dropdown col-md-12" name="college">
+                         
+                          @if(count($colleges)>0)
+                              @foreach($colleges as $college)
+                                <option value="{{ $college->college_name }}">{{ $college->college_name }}</option>
+                              @endforeach
+                            @endif
+                        </select>
+                        </div>         
                </div>
                <div class="col-md-6 pl-1">
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                      <label>Semester</label>
                      <input type="text" class="form-control" name="semester" required placeholder="Enter the semester" 
                         value="{{ !empty($enquiry) ? $enquiry->semester :'' }}">
-                  </div>
+                  </div> -->
+                  <div class="form-group">
+                        <label>Semester</label>
+                          <select class="form-control" name="semester" placeholder="Enter the semester" id="semester">
+                        @if(!empty($enquiry))
+                            <option value="{{ $enquiry->semester }}" selected readonly>{{ $enquiry->semester }}</option>
+                        @endif
+                            <option value="1st">1st</option>
+                            <option value="2nd">2nd</option>
+                            <option value="3rd">3rd</option>
+                            <?php 
+                              for($i=4;$i<=8;$i++)
+                              {
+                                echo "<option value='".$i.'th'."'>".$i."th"."</option>";
+                              }
+                            ?>
+                          </select>
+                        
+                 
+                    </div>
                </div>
             </div>
             <div class="row">
@@ -184,8 +209,8 @@
 <script src="{{ asset('assets/semantic/dist/semantic.min.js') }}"></script>
 <script src="{{ asset('assets/select2/select2.min.js') }}"></script>
 <script>
-
-   
+   $('#college').dropdown();
+   $('#semester').dropdown();
    $('#course').dropdown({
      placeholder:'Select the course',
      useLabels: false

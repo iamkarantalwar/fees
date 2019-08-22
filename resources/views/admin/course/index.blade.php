@@ -52,7 +52,7 @@
                         </a>
                      </td>
                      <td>
-                        <form action="{{ route('admin.course.destroy',['course'=>$course->id]) }}" method="POST">
+                        <form class="deleteform" action="{{ route('admin.course.destroy',['course'=>$course->id]) }}" method="POST">
                            @csrf
                            @method('DELETE')                           
                            <button type="submit" class="btn btn-outline-danger">Delete Course</button>
@@ -68,5 +68,26 @@
       </div>
    </div>
 </div>
+<script>
+  $('.deleteform').on('submit',function(e){
 
+e.preventDefault();
+swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this course!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+})
+    .then((willDelete) => {
+    if (willDelete) {
+        
+        $(this).submit();
+    } else {
+        swal("Your course is safe!");
+        return false;
+    }
+    });
+});
+</script>
 @endsection

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFeesTable extends Migration
+class CreateCollegesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateFeesTable extends Migration
      */
     public function up()
     {
-        Schema::create('fees', function (Blueprint $table) {
+        Schema::create('colleges', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('registration_id');
-            $table->foreign('registration_id')->references('id')->on('registrations')->onDelete('restrict');  
-            $table->String('recipt_no');
-            $table->String('payable_amount');
-            $table->String('pending_amount');
+            $table->string('college_name')->unique();
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateFeesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fees');
+        Schema::dropIfExists('colleges');
     }
 }

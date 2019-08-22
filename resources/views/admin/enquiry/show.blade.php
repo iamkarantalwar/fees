@@ -1,5 +1,13 @@
 @extends('admin.layout')
 @section('context')
+@foreach (['danger', 'warning', 'success', 'info'] as $msg)
+    @if(Session::has($msg))
+    <script>
+      demo.showNotification('top','center','{{ Session::get($msg) }}','{{ $msg }}')
+    </script>
+   
+    @endif
+@endforeach
 <div class="col-md-12">
             <div class="card card-user">
               <div class="card-header">
@@ -96,7 +104,7 @@
                      </a>
                      </div>
                      <div class="col-md-4">
-                      <form action="{{ route('admin.enquiry.destroy',['id'=>$enquiry->id]) }}" method="post">
+                      <form class="deleteform" action="{{ route('admin.enquiry.destroy',['id'=>$enquiry->id]) }}" method="post">
                             @method("DELETE")
                             @csrf
                             <button type="submit" class="btn btn-outline-danger btn-round">Delete Enquiry</button>
@@ -124,7 +132,27 @@
         
     }); 
 
-    
+
+  $('.deleteform').on('submit',function(e){
+
+e.preventDefault();
+swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this enquiry!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+})
+    .then((willDelete) => {
+    if (willDelete) {
+        
+        $(this).submit();
+    } else {
+        swal("Your enquiry is safe!");
+        return false;
+    }
+    });
+});
 </script>
 
 @endsection

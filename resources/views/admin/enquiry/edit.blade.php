@@ -40,15 +40,35 @@
                   </div>
                   <div class="row">
                     <div class="col-md-6 pr-1">
+                   
                       <div class="form-group">
-                        <label>College</label>
-                        <input type="text"  class="form-control" name="college" required placeholder="Enter the college" value="{{ $enquiry->college }}">
-                      </div>
+                        <label>College Name</label>
+                        <select id="college" class="ui search dropdown col-md-12" name="college">
+                          <option value="{{ $enquiry->college }}" selected>{{ $enquiry->college }}</option>
+                          @if(count($colleges)>0)
+                              @foreach($colleges as $college)
+                                <option value="{{ $college->college_name }}">{{ $college->college_name }}</option>
+                              @endforeach
+                            @endif
+                        </select>
+                        </div>         
                     </div>
                     <div class="col-md-6 pl-1">
-                      <div class="form-group">
+                    <div class="form-group">
                         <label>Semester</label>
-                        <input type="text"  class="form-control" name="semester" required placeholder="Enter the semester" value="{{ $enquiry->semester }}">
+                          <select class="form-control" name="semester" placeholder="Enter the semester" id="semester">
+                            <option value="{{ $enquiry->semester }}" selected readonly>{{ $enquiry->semester }}</option>
+                            <option value="1st">1st</option>
+                            <option value="2nd">2nd</option>
+                            <option value="3rd">3rd</option>
+                            <?php 
+                              for($i=4;$i<=8;$i++)
+                              {
+                                echo "<option value='".$i.'th'."'>".$i."th"."</option>";
+                              }
+                            ?>
+                          </select>
+                        
                       </div>
                     </div>
                   </div>
@@ -93,14 +113,15 @@
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Refrence By</label>
-                        <input type="text"  class="form-control" placeholder="" required="" value="" name="refrence">
+                        <input type="text"  class="form-control" placeholder=""  value="" name="refrence">
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="update ml-auto mr-auto">                    
                         <button type="submit" class="btn btn-outline-primary btn-round">Update Enquiry</button>
-                        <form action="{{ route('admin.enquiry.destroy',['id'=>$enquiry->id]) }}" method="POST">
+                        </form>
+                        <form class="deleteform" action="{{ route('admin.enquiry.destroy',['id'=>$enquiry->id]) }}" method="POST">
                             @method("DELETE")
                             @csrf
                             <button type="submit" class="btn btn-outline-danger btn-round">Delete Enquiry</button>
@@ -108,7 +129,7 @@
                     </div>
                   </div>
 
-                </form>
+             
               </div>
             </div>
           </div>
@@ -116,12 +137,34 @@
 
 <script>
 
+    $('#semester').dropdown();
+
     $('.ui.dropdown')
     .dropdown({
         clearable: true,
         
     }); 
 
+    $('.deleteform').on('submit',function(e){
+
+e.preventDefault();
+swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this enquiry!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+})
+    .then((willDelete) => {
+    if (willDelete) {
+        
+        $(this).submit();
+    } else {
+        swal("Your enquiry is safe!");
+        return false;
+    }
+    });
+});
     
 </script>
 

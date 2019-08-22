@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Context;
+use Exception;
 
 class Cotext extends Controller
 {
@@ -15,6 +16,8 @@ class Cotext extends Controller
     }
     public function index()
     {
+        // $context = Context::findOrFail(3);
+        // echo $context->relation();die;
         $contexts = Context::all();       
         return view('admin.contexts.index')->with(['contexts'=>$contexts]);
     }
@@ -74,7 +77,15 @@ class Cotext extends Controller
     public function destroy($id)
     {
         $context = Context::findOrFail($id);
-        $context->delete();
-        return redirect()->back()->with('danger','Context has been deleted');
+        try
+        {  
+            $context->delete();
+            return redirect()->back()->with('danger','Context has been deleted');
+        }
+        catch(Exception $e)
+        {   
+            return redirect()->back()->with('danger','You cannot delete this context.It is associated with other fields.');
+        }
+        
     }
 }

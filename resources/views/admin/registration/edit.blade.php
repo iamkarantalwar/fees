@@ -40,10 +40,17 @@
             <input type="hidden" name="" value="">
             <div class="row">
                <div class="col-md-6 pr-1">
-                  <div class="form-group">
-                     <label>College</label>
-                     <input type="text" class="form-control" name="college" required placeholder="Enter the college" value="{{ $registration->college }}" >
-                  </div>
+               <div class="form-group">
+                        <label>College Name</label>
+                        <select id="college" class="ui search dropdown col-md-12" name="college">
+                          <option value="{{ $registration->college }}" selected>{{ $registration->college }}</option>
+                          @if(count($colleges)>0)
+                              @foreach($colleges as $college)
+                                <option value="{{ $college->college_name }}">{{ $college->college_name }}</option>
+                              @endforeach
+                            @endif
+                        </select>
+                        </div>         
                </div>
                <div class="col-md-6 pl-1">
                   <div class="form-group">
@@ -178,6 +185,7 @@
 <script src="{{ asset('assets/semantic/dist/semantic.min.js') }}"></script>
 <script src="{{ asset('assets/select2/select2.min.js') }}"></script>
 <script>
+   $('#college').dropdown();
    var fees = 0;
    var total_fees = 0;
    var extra_charges = 0;
