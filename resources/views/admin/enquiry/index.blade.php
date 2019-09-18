@@ -57,7 +57,7 @@
                       <td> {{ $loop->iteration }}</td>
                       <td> {{ $enquiry->name }} </td>
                       <td> {{ $enquiry->phone_no }} </td>
-                      <td> {{ $enquiry->college }} </td>
+                      <td> {{ $enquiry->college->college_name }} </td>
                    
                       <td> 
                           @foreach($enquiry->courses as $course)

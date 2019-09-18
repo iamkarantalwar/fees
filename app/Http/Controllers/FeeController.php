@@ -7,11 +7,12 @@ use App\Registration;
 use Illuminate\Http\Request;
 use \Auth;
 use \Hash;
+
 class FeeController extends Controller
 {
     public function __construct()
 {
-    $this->middleware('auth');
+    // $this->middleware('auth');
 }
     
     
@@ -67,6 +68,7 @@ class FeeController extends Controller
                 $fee->registration_id = $reg_id;
                 $fee->recipt_no = $request->post('recipt_no');
                 $fee->payable_amount = $request->post('payable_amount');
+                $fee->user_id = Auth::user()->id;
 
                 $fee->pending_amount = $balance;
                 $fee->save();      

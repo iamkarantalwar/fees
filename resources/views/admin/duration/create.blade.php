@@ -1,13 +1,5 @@
 @extends('admin.layout')
 @section('context')
-@foreach (['danger', 'warning', 'success', 'info'] as $msg)
-    @if(Session::has($msg))
-    <script>
-      demo.showNotification('top','center','{{ Session::get($msg) }}','{{ $msg }}')
-    </script>
-   
-    @endif
-  @endforeach
 <div class="col-md-12">
             <div class="card card-user">
               <div class="card-header">
@@ -20,8 +12,16 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <label>Context Name</label>
-                        <input type="text" class="form-control" placeholder="Enter Context" name="context" required >
+                        <label>Duration</label>
+                        <input type="text" class="form-control" placeholder="Enter Duration" name="duration" required >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label>Duration</label>
+                        <input type="text" class="form-control" placeholder="Enter COurse Code" name="code" required >
                       </div>
                     </div>
                   </div>
@@ -32,7 +32,7 @@
                   <div class="row">
                 
                     <div class="update ml-auto mr-auto">
-                      <button type="submit" class="btn btn-primary btn-round">Add Context</button>
+                      <button type="submit" class="btn btn-primary btn-round">Add Duration</button>
                     </div>
                   </div>
                 </form>

@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $('#course').on('change',function(){
-            var id = $(this).val();
+            var id = $(this).val().pop();
             $.ajax({
                 'url':'{{ route("api.course.getcourse") }}',
                 'method':'GET',

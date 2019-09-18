@@ -60,7 +60,7 @@
                       <td> {{ $loop->iteration }}</td>
                       <td> {{ $registration->name }} </td>
                       <td> {{ $registration->phoneno }} </td>
-                      <td> {{ $registration->college }} </td>
+                      <td> {{ $registration->college->college_name }} </td>
                    
                       <td> 
                           @foreach($registration->courses as $course)

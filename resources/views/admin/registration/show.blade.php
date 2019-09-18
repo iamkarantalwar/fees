@@ -45,7 +45,7 @@
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>College</label>
-                        <input type="text" class="form-control" name="college" required placeholder="Enter the college" value="{{ $registration->college }}" disabled>
+                        <input type="text" class="form-control" name="college" required placeholder="Enter the college" value="{{ $registration->college->college_name }}" disabled>
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
@@ -71,7 +71,7 @@
                     <div class="col-md-6 pl-1" >
                       <div class="form-group" id="contexts-div">
                         <label>Context</label>
-                        <select class="ui search dropdown col-md-12" multiple="" name="context[]" id="contexts" placeholder="Enter the context" >
+                        <select class="ui search dropdown col-md-12" multiple="" name="context[]" id="contexts" placeholder="Enter the context" disabled >
                             @foreach($registration->contexts as $context)
                                   <option value="{{ $context->id }}" selected>{{ $context->context }}</option>
                             @endforeach 
@@ -85,7 +85,7 @@
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Extra Course</label>
-                        <input type="text" class="form-control" name="extra_context" required placeholder="Enter any extra course" value="{{ $registration->extra_context }}" disabled>
+                        <input type="text" class="form-control" name="extra_context" required  value="{{ $registration->extra_context }}" disabled>
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
@@ -138,7 +138,7 @@
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>Refrence By</label>
-                        <input type="text" class="form-control" placeholder="Enter the refrence" name="refrence" value="{{ $registration->refrence }}" disabled>
+                        <input type="text" class="form-control"  name="refrence" value="{{ $registration->refrence }}" disabled>
                       </div>
                     </div>
                    

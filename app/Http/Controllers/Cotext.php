@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Context;
+use Illuminate\Support\Facades\Validator;
 use Exception;
 
 class Cotext extends Controller
@@ -11,22 +12,16 @@ class Cotext extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->user =  \Auth::user();
+        // $this->middleware('auth');
+        // $this->user =  \Auth::user();
     }
     public function index()
     {
-        // $context = Context::findOrFail(3);
-        // echo $context->relation();die;
+      
         $contexts = Context::all();       
         return view('admin.contexts.index')->with(['contexts'=>$contexts]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('admin.contexts.create');
@@ -36,9 +31,19 @@ class Cotext extends Controller
    
     public function store(Request $request)
     {
+        $validate = Validator::make($request->all(),[
+            'context'=>'required|unique:contexts'
+        ]);
+        if ($validate->fails()) {
+           
+           
+            return redirect()->back()->with('danger','Context is already exist.');
+        }
+        
         $context = new Context();
         $context->context=$request->post('context');
         $context->save();
+      
         return redirect()->route('admin.context.index')
                         ->with('success','Context is added.');
 
@@ -47,7 +52,7 @@ class Cotext extends Controller
   
     public function show($id)
     {
-        //
+        
         return "hello world";
     }
 
@@ -58,15 +63,17 @@ class Cotext extends Controller
         return view('admin.contexts.edit')->with(['context'=>$context]);       
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, $id)
     {
+        $validate = Validator::make($request->all(),[
+            'context' => 'required|unique:contexts,context,'. $id .'',
+        ]);
+        if ($validate->fails()) {
+           
+           
+            return redirect()->back()->with('danger','Context is already exist.')->withErrors($validate);
+        }
         $context = Context::findOrFail($id);
         $context->context=$request->post('context');
         $context->save();

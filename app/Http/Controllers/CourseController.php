@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Context;
+use App\Duration;
 use Illuminate\Http\Request;
 use Exception;
 class CourseController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->user =  \Auth::user();
+        // $this->middleware('auth');
+        // $this->user =  \Auth::user();
     }
     public function index()
     {
@@ -21,15 +22,17 @@ class CourseController extends Controller
   
     public function create()
     {
+        $durations = Duration::all();
         $contexts = Context :: all();
-        return view('admin.course.create')->with(['contexts'=>$contexts]);
+        return view('admin.course.create')->with(['contexts'=>$contexts,
+                                                  'durations'=>$durations]);
     }
 
     public function store(Request $request)
     {
         $a = new Course();
         $a ->name = $request->post('course');
-        $a ->duration = $request->post('duration');        
+        $a ->duration_id = $request->post('duration');        
         $a ->fees = $request->post('fees');            
         $a ->save();
         $context = array_values($request->post('contexts'));
@@ -47,6 +50,7 @@ class CourseController extends Controller
 
     public function edit(Course $course)
     {       
+        $durations = Duration::all();
         $all_contexts = Context :: all();
         $avail_contexts = $course->contexts;    
        
@@ -67,6 +71,7 @@ class CourseController extends Controller
 
         return view('admin.course.edit')->with(['contexts'  => $context_list,                                       
                                                 'course'    => $course,
+                                                'durations' => $durations
                                                 ]);
 
     }
@@ -75,7 +80,7 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         $course ->name = $request->post('course');
-        $course ->duration = $request->post('duration');        
+        $course ->duration_id = $request->post('duration');        
         $course ->fees = $request->post('fees');  
         $context = array_values($request->post('contexts'));
         $course ->contexts() ->sync($context);          

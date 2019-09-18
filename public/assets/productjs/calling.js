@@ -4,6 +4,7 @@ function appendtablebody(response){
     var tbody="";
     var srno = 1;
     response.forEach((student)=>{
+      
             
             var courses="";
             student.courses.forEach((course)=>{
@@ -12,8 +13,9 @@ function appendtablebody(response){
 
             var last_call = student.callings.pop();
            
-            tbody +=`<tr class='cursor' onclick="changeModelRoute(${student.id})"><td>${srno}</td><td>${student.name}</td><td>${student.phone_no}</td>
-                        <td>${student.college}</td><td>${courses}</td><td>${student.semester}</td>
+            tbody +=`<tr class='cursor' onclick="changeModelRoute(${student.id})"><td>${srno}</td><td>${student.name}</td>
+            <td>${student.phone_no}</td>
+                        <td>${student.college.college_name}</td><td>${courses}</td><td>${student.semester}</td>
                         <td>${last_call!=undefined ? last_call.created_at:"No Call Yet"}</td>
                         <td>${last_call!=undefined ? last_call.status:"Still Pending"}</td>
                     </tr>`;   
@@ -23,9 +25,8 @@ function appendtablebody(response){
     });
     $('#tbody').html(tbody);   
 }
-
-$(document).ready((e)=>{
-    
+function fetchAllStudents()
+{
     $.ajax({
         url:window.route.fetchstudents,
         method: "GET"
@@ -38,6 +39,10 @@ $(document).ready((e)=>{
             
             appendtablebody(response);
         })
+}
+$(document).ready((e)=>{
+    
+    fetchAllStudents();
 
     $('#searchstudents').click(function(e){
 
@@ -53,7 +58,9 @@ $(document).ready((e)=>{
             });
     });
 
-    
+    $('#myModal').on('hidden.bs.modal', function (e) {
+        fetchAllStudents();
+      });
 
 });
 

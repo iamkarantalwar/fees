@@ -44,10 +44,15 @@
                       <div class="form-group">
                         <label>College Name</label>
                         <select id="college" class="ui search dropdown col-md-12" name="college">
-                          <option value="{{ $enquiry->college }}" selected>{{ $enquiry->college }}</option>
+                         
                           @if(count($colleges)>0)
                               @foreach($colleges as $college)
-                                <option value="{{ $college->college_name }}">{{ $college->college_name }}</option>
+                               @if ($college->id == $enquiry->college->id)
+                                  <option selected value="{{ $college->id }}">{{ $college->college_name }}</option>
+                               @else
+                                  <option value="{{ $college->id }}">{{ $college->college_name }}</option>
+                               @endif
+                               
                               @endforeach
                             @endif
                         </select>
@@ -73,6 +78,33 @@
                     </div>
                   </div>
                   <div class="row">
+                      <div class="col-md-6 pr-1">
+                        <div class="form-group">
+                          <label>Degree</label>
+                          <select class="ui search dropdown col-md-12" name="degree" placeholder="Enter The Degree Name" required>
+                              @if(count($degrees)>0)
+                                  @foreach($degrees as $degree)
+                                    @if ($degree->id == $enquiry->degree_id)
+                                    <option selected value="{{ $degree->id }}">{{ $degree->name }}</option>
+                                    @else
+                                      <option value="{{ $degree->id }}">{{ $degree->name }}</option>
+                                    @endif
+                                    
+                                  @endforeach
+                                @endif
+                              </select>
+                          </div>          
+  
+                      </div>
+                      <div class="col-md-6 pl-1">
+                        <div class="form-group">
+                          <label>Stream</label>
+                        <input type="text" name="stream" id="" class="form-control" placeholder="Enter The Stream" required value="{{ $enquiry->stream }}">
+                          
+                        </div>
+                      </div>
+                    </div>
+                  <div class="row">
                     <div class="col-md-6 pr-1">
                         <div class="form-group">
                             <label>Course</label><br/>
@@ -93,11 +125,26 @@
                         </div>
                     </div>
                     <div class="col-md-6 pl-1">
-                      <div class="form-group">
-                        <label>Duration</label>
-                        <input type="text" class="form-control"  placeholder="Enter the duration" name="duration" value="{{ $enquiry->duration }}">
+                        <div class="form-group">
+                          <label>Duration</label>
+                          <select class="form-control ui search dropdown" name="duration_id" id="duration" required>
+                          
+                              @if (count($durations)>0)
+                                 
+                                  @foreach ($durations as $duration)
+                                    @if ($duration->id == $enquiry->duration_id)
+                                      <option selected value="{{$duration->id}}">{{$duration->name}}</option>
+                                    @else
+                                      <option value="{{$duration->id}}">{{$duration->name}}</option>
+                                    @endif
+                                    
+                                  @endforeach
+                              @else
+                                  <option disabled selected>Please add the durations</option>
+                              @endif
+                          </select>
+                        </div>
                       </div>
-                    </div>
                   </div>
                  
                  

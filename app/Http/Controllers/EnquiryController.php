@@ -6,28 +6,41 @@ use Illuminate\Http\Request;
 use App\Course;
 use App\Enquiry;
 use App\College;
+use App\Duration;
+use App\Degree;
 use Exception;
 class EnquiryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->user =  \Auth::user();
+        // $this->middleware('auth');
+        // $this->user =  \Auth::user();
     }
     public function index()
     {
         
-        $enquiries = Enquiry::all();
+        $enquiries = Enquiry::doesnthave('registration')->get();
         return view('admin.enquiry.index')->with(['enquiries'=>$enquiries]);
     }
 
    
     public function create()
     {
-        
+        $enquiries = Enquiry::all();
+        $enq_id;
+        if(count($enquiries)==0){
+            $enq_id=1;
+        }
+        else{
+            $enq_id = $enquiries->last()->id + 1; 
+        }
+       
+        $degrees = Degree::all();
+        $durations = Duration::all();
         $colleges = College::all();
         $courses = Course::all();
-        return view('admin.enquiry.create')->with(['courses'=>$courses,'colleges'=>$colleges]);
+        return view('admin.enquiry.create')->with(['courses'=>$courses,'colleges'=>$colleges,
+                                                   'durations'=>$durations,'degrees'=>$degrees]);
     }
 
    
@@ -45,11 +58,12 @@ class EnquiryController extends Controller
         $enquiry->phone_no = $request->post('phoneno');
         $enquiry->email = $request->post('email');
         $enquiry->semester = $request->post('semester');
-        $enquiry->college = $request->post('college');
-        $enquiry->duration = $request->post('duration');
+        $enquiry->college_id = $request->post('college');
+        $enquiry->duration_id = $request->post('duration_id');
         $enquiry->narration = $request->post('narration');
         $enquiry->refrence = $request->post('refrence');
-        
+        $enquiry->degree_id = $request->post('degree');
+        $enquiry->stream = $request->post('stream');
         $enquiry->save();
         $courses = array_values($request->post('course'));
         $enquiry ->courses() ->attach($courses);
@@ -88,9 +102,10 @@ class EnquiryController extends Controller
    
     public function edit($id)
     {
-       $colleges = College::all();
-       $enquiry = Enquiry::findOrFail($id);
-        
+        $enquiry = Enquiry::findOrFail($id);
+        $colleges = College::all();        
+        $degrees = Degree::all();
+        $durations = Duration::all();
         $courses = Course::all();        
         $enquiry_courses = $enquiry->courses;
 
@@ -111,7 +126,9 @@ class EnquiryController extends Controller
         
         return view('admin.enquiry.edit')->with(['courses'=>$courses_detail,
                                                  'enquiry'=>$enquiry,
-                                                 'colleges'=>$colleges
+                                                 'colleges'=>$colleges,
+                                                 'durations'=>$durations,
+                                                 'degrees'=>$degrees
                                                 ]);
     }
 
@@ -123,10 +140,12 @@ class EnquiryController extends Controller
         $enquiry->phone_no = $request->post('phoneno');
         $enquiry->email = $request->post('email');
         $enquiry->semester = $request->post('semester');
-        $enquiry->college = $request->post('college');
-        $enquiry->duration = $request->post('duration');
+        $enquiry->college_id = $request->post('college');
+        $enquiry->duration_id = $request->post('duration_id');
         $enquiry->narration = $request->post('narration');
         $enquiry->refrence = $request->post('refrence');
+        $enquiry->degree_id = $request->post('degree');
+        $enquiry->stream = $request->post('stream');
         $enquiry->save();
         $courses = array_values($request->post('course'));
         $enquiry ->courses()->sync($courses);

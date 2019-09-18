@@ -16,4 +16,20 @@ class Enquiry extends Model
     {
         return $this->hasMany(Calling::class);
     }
+    public function degree()
+    {
+        return $this->belongsTo(Degree::class);
+    }
+    public function college()
+    {
+        return $this->belongsTo(College::class);
+    }
+    public function duration()
+    {
+        return $this->belongsTo(Duration::class);
+    }
+    public function registration()
+    {
+        return $this->hasOne(Registration::class);
+    }
 }

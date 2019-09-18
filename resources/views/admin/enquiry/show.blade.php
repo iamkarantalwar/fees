@@ -40,7 +40,7 @@
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>College</label>
-                        <input type="text" disabled class="form-control" name="college" required placeholder="Enter the college" value="{{ $enquiry->college }}">
+                        <input type="text" disabled class="form-control" name="college" required placeholder="Enter the college" value="{{ $enquiry->college->college_name }}">
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
@@ -50,6 +50,20 @@
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                      <div class="col-md-6 pr-1">
+                        <div class="form-group">
+                          <label>Degree</label>
+                          <input type="text" disabled class="form-control" name="college" required placeholder="Enter the college" value="{{ $enquiry->degree->name }}">
+                        </div>
+                      </div>
+                      <div class="col-md-6 pl-1">
+                        <div class="form-group">
+                          <label>Stream</label>
+                          <input type="text" disabled class="form-control" name="semester" required placeholder="Enter the semester" value="{{ $enquiry->stream }}">
+                        </div>
+                      </div>
+                    </div>
                   <div class="row">
                     <div class="col-md-6 pr-1">
                         <div class="form-group">
@@ -73,7 +87,7 @@
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>Duration</label>
-                        <input type="text" class="form-control" disabled placeholder="Enter the duration" name="duration" value="{{ $enquiry->duration }}">
+                        <input type="text" class="form-control" disabled placeholder="Enter the duration" name="duration" value="{{ $enquiry->duration->name }}">
                       </div>
                     </div>
                   </div>

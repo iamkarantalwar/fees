@@ -12,7 +12,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/admin/getcourse/',function(Request $request){
     $course_id = $request->get('course_id');
-    $course = Course::findOrFail($course_id)->first();   
+    $course = Course::findOrFail(2)->first();   
     return $course; 
     })->name('api.course.getcourse');
 
@@ -25,14 +25,16 @@ Route::get('/admin/getcontext/',function(Request $request){
 
 
 Route::get('/admin/enquiries/',function(Request $request){
-    $enquiries = Enquiry::with('callings')->with('courses')->get();
+  
+   $enquiries = Enquiry::doesnthave('registration')->with('callings')->with('courses')->with('college')->get();
+
     return ($enquiries);
      })->name('api.fetchallenquiries');
 
 Route::get('/admin/enquiries/filter',function(Request $request){
     $enquiries = Enquiry::orWhere('id',$request->get('enquiry_id'))->orWhere('name',$request->get('name'))->
-                         orWhere('semester',$request->get('semester'))->orWhere('college',$request->get('college'))->
-                          with('callings')->with('courses')->get();
+                         orWhere('semester',$request->get('semester'))->orWhere('college_id',$request->get('college'))->
+                          with('callings')->with('courses')->with('college')->get();
     return ($enquiries);
     })->name('api.filterenquiries');
 
@@ -42,7 +44,7 @@ Route::get('/admin/enquiries/filter',function(Request $request){
 
 Route::get('/admin/registerations/',function(Request $request){
    
-    $registrations = Registration::with('fees')->with('courses')->get();
+    $registrations = Registration::with('fees')->with('courses')->with('college')->get();
 
    return ($registrations);
      
@@ -54,7 +56,7 @@ Route::get('/admin/registerations/filter',function(Request $request){
     
     $registrations = Registration::orWhere('id',$request->get('registration_id'))->orWhere('name',$request->get('name'))->
                          orWhere('semester',$request->get('semester'))->orWhere('college',$request->get('college'))->
-                          with('callings')->with('courses')->get();
+                          with('callings')->with('courses')->with('college')->get();
 
    return ($registrations);
      

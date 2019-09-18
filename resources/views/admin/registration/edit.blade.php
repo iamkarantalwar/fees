@@ -43,10 +43,14 @@
                <div class="form-group">
                         <label>College Name</label>
                         <select id="college" class="ui search dropdown col-md-12" name="college">
-                          <option value="{{ $registration->college }}" selected>{{ $registration->college }}</option>
+                         
                           @if(count($colleges)>0)
                               @foreach($colleges as $college)
-                                <option value="{{ $college->college_name }}">{{ $college->college_name }}</option>
+                              @if ($college->id == $registration->college->id)
+                                 <option selected value="{{ $college->college_name }}">{{ $college->college_name }}</option>
+                              @else
+                                 <option value="{{ $college->college_name }}">{{ $college->college_name }}</option>
+                              @endif                                
                               @endforeach
                             @endif
                         </select>
@@ -59,6 +63,42 @@
                   </div>
                </div>
             </div>
+            <div class="row">
+                  <div class="col-md-6 pr-1">
+                    <div class="form-group">
+                      <label>Degree</label>
+                      <select class="ui search dropdown col-md-12" name="degree" placeholder="Enter The Degree Name" id="degree">
+                          @if(count($degrees)>0)
+                              @if (!empty($enquiry))
+                              @foreach($degrees as $degree)
+                              @if ($degree->id == $registration->degree->id)
+                              <option selected value="{{ $degree->id }}">{{ $degree->name }}</option>
+                              @else
+                              <option value="{{ $degree->id }}">{{ $degree->name }}</option>
+                              @endif
+                                
+                              @endforeach
+                                  
+                              @else
+                              @foreach($degrees as $degree)
+                                <option value="{{ $degree->id }}">{{ $degree->name }}</option>
+                              @endforeach
+                                  
+                              @endif
+                              
+                            @endif
+                          </select>
+                      </div>          
+   
+                  </div>
+                  <div class="col-md-6 pl-1">
+                    <div class="form-group">
+                      <label>Stream</label>
+                    <input type="text" name="stream" id="" class="form-control" placeholder="Enter The Stream" value="{{ $registration->stream }}">
+                      
+                    </div>
+                  </div>
+               </div>
             <div class="row">
                <div class="col-md-6 pr-1">
                   <div class="form-group">
@@ -185,7 +225,9 @@
 <script src="{{ asset('assets/semantic/dist/semantic.min.js') }}"></script>
 <script src="{{ asset('assets/select2/select2.min.js') }}"></script>
 <script>
-   $('#college').dropdown();
+   $('#college,#degree').dropdown({
+      clearable:true
+   });
    var fees = 0;
    var total_fees = 0;
    var extra_charges = 0;

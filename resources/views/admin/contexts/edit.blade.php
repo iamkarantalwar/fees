@@ -1,10 +1,13 @@
 @extends('admin.layout')
 @section('context')
-@if(Session::has('success'))
-<script>
-    demo.showNotification('top','center','Context has updated.','primary')
-</script>
-@endif
+@foreach (['danger', 'warning', 'success', 'info'] as $msg)
+    @if(Session::has($msg))
+    <script>
+      demo.showNotification('top','center','{{ Session::get($msg) }}','{{ $msg }}')
+    </script>
+   
+    @endif
+  @endforeach
 <div class="col-md-12">
             <div class="card card-user">
               <div class="card-header">
@@ -19,7 +22,13 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>Context Name</label>
-                        <input type="text" class="form-control" placeholder="Enter Context" value="{{ $context->context }}" name="context" required >
+                        <input type="text"
+                        class="form-control   @if ($errors->has('context')) invalidform  @endif" placeholder="Enter Context" value="{{ $context->context }}" name="context" required >
+                  
+                        @if ($errors->has('context'))
+                        <small style="color:red">*Context already exist.</small>
+                        @endif
+                      
                       </div>
                     </div>
                   </div>

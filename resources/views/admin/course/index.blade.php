@@ -45,7 +45,7 @@
                   <tr>
                      <th>{{ $i }}</th>
                      <th>{{ $course ->name }}</th>
-                     <th>{{ $course ->duration }}</th>
+                     <th>{{ $course ->duration->name }}</th>
                      <td>
                         <a href="{{ route('admin.course.edit',['course'=>$course->id]) }}">
                            <button class="btn btn-outline-primary">Edit</button>

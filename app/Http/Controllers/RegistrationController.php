@@ -8,13 +8,14 @@ use App\Course;
 use App\Enquiry;
 use App\Fee;
 use App\College;
+use App\Degree;
 
 class RegistrationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->user =  \Auth::user();
+        // $this->middleware('auth');
+        // $this->user =  \Auth::user();
     }
     public function index()
     {
@@ -27,22 +28,32 @@ class RegistrationController extends Controller
    
     public function create(Request $request)
     {    
+        $degrees = Degree::all();
         $enquiryid = $request->get('enquiryid');
-       
+        $courses = Course::all();
         $colleges = College::all();
         if ($enquiryid!=null)
          {
-
-           $enquiry = Enquiry::findOrFail($enquiryid);       
-            $courses = Course::all();
-            return view('admin.registration.create')->with(['courses'=>$courses,
-                                                            'enquiry'=>$enquiry,
-                                                            'colleges'=>$colleges]);
+           $register = Registration::where('id',$enquiryid)->get();          
+           if($register->isEmpty())
+           {
+                $enquiry = Enquiry::findOrFail($enquiryid);     
+            
+                return view('admin.registration.create')->with(['courses'=>$courses,
+                                                                'enquiry'=>$enquiry,
+                                                                'colleges'=>$colleges,
+                                                                'degrees'=>$degrees]);
+           }
+           else
+           {
+                return redirect()->back()->with('danger','This Enquiry is already registered with us.');
+           }         
          }
          else
-         {
-            $courses = Course::all();
-            return view('admin.registration.create')->with(['courses'=>$courses,'colleges'=>$colleges]);
+         {           
+            return view('admin.registration.create')->with(['courses'=>$courses,
+                                                            'colleges'=>$colleges,
+                                                            'degrees'=>$degrees]);
          }
     }
 
@@ -55,8 +66,8 @@ class RegistrationController extends Controller
         $registration->phoneno = $request->post('phoneno');
         $registration->email = $request->post('email');
         $registration->semester = $request->post('semester');
-        $registration->college = $request->post('college');
-      
+        $registration->college_id = $request->post('college');
+        $registration->degree_id = $request->post('degree');
         $registration->narration = $request->post('narration');
         $registration->training_type = $request->post('training_type');
         $registration->extra_context = $request->post('extra_context');
@@ -66,7 +77,7 @@ class RegistrationController extends Controller
         $registration->narration = $request->post('narration');
         $registration->refrence = $request->post('refrence');
         $registration->total_fees = $request->post('total_fees');
-    
+        $registration->stream = $request->post('stream');
         $registration->enquiry_id = $request->post('enquiry_id');
         $registration->reciept_no = $request->post('reciept_no');
         $registration->registration_amount = $request->post('registration_amount');
@@ -99,6 +110,7 @@ class RegistrationController extends Controller
    
     public function edit(Registration $registration)
     {
+        $degrees = Degree::all();
         $colleges = College::all();
         $courses = Course::all();
         $registration_courses =  $registration->courses;
@@ -110,7 +122,8 @@ class RegistrationController extends Controller
                                                       'registration_courses'=>$registration_courses,
                                                       'course_context'=>$course_context,
                                                       'registration_context'=> $registration_context,
-                                                      'colleges'=>$colleges
+                                                      'colleges'=>$colleges,
+                                                      'degrees'=>$degrees
                                                   ]);
     }
 

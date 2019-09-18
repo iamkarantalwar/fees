@@ -19,8 +19,13 @@ class CreateEnquiriesTable extends Migration
             $table->bigInteger('phone_no');
             $table->string('email');
             $table->string('semester');
-            $table->string('college');
-            $table->string('duration'); 
+            $table->unsignedBigInteger('college_id');
+            $table->foreign('college_id')->references('id')->on('colleges')->onDelete('restrict');
+            $table->unsignedBigInteger('degree_id');
+            $table->foreign('degree_id')->references('id')->on('degrees')->onDelete('restrict');
+            $table->unsignedBigInteger('duration_id'); 
+            $table->foreign('duration_id')->references('id')->on('durations')->onDelete('restrict');
+            $table->string('stream');
             $table->text('narration');  
             $table->string('refrence')->nullable();      
             $table->timestamps();

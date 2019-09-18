@@ -20,6 +20,7 @@ class CreateFeesTable extends Migration
             $table->String('recipt_no');
             $table->String('payable_amount');
             $table->String('pending_amount');
+            $table->String('user_id');
             $table->timestamps();
         });
     }

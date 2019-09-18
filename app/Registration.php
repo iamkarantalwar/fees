@@ -19,4 +19,13 @@ class Registration extends Model
     {
         return $this->hasMany(Fee::class);
     }
+    public function degree()
+    {
+        return $this->belongsTo(Degree::class);
+    }
+    public function college()
+    {
+        return $this->belongsTo(College::class);
+    }
+    
 }

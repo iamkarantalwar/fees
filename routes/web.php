@@ -83,6 +83,34 @@ Route::resource('admin/fee', 'FeeController',
     ]
 ]);
 
+Route::resource('admin/duration', 'DurationController',
+[
+   'names'=>[
+        'index'     =>'admin.duration.index',
+        'create'    =>'admin.duration.create',
+        'store'     =>'admin.duration.store',
+        'edit'      =>'admin.duration.edit',
+        'destroy'   =>'admin.duration.destroy',
+        'update'    =>'admin.duration.update',
+        'show'      =>'admin.duration.show',
+       
+    ]
+]);
+
+Route::resource('admin/degree', 'DegreeController',
+[
+   'names'=>[
+        'index'     =>'admin.degree.index',
+        'create'    =>'admin.degree.create',
+        'store'     =>'admin.degree.store',
+        'edit'      =>'admin.degree.edit',
+        'destroy'   =>'admin.degree.destroy',
+        'update'    =>'admin.degree.update',
+        'show'      =>'admin.degree.show',
+       
+    ]
+]);
+
 Route::resource('admin/college', 'CollegeController',
 [
    'names'=>[

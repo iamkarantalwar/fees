@@ -12,4 +12,9 @@ class Course extends Model
     {
         return $this->belongsToMany('App\Context','context_course','course_id','context_id');
     }
+
+    public function duration()
+    {
+        return $this->belongsTo(Duration::class);
+    }
 }

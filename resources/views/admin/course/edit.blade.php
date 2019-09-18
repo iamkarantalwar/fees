@@ -27,7 +27,21 @@
             <div class="col-md-6 px-1">
               <div class="form-group">
                 <label>Duration</label>
-                <input type="text" class="form-control" name="duration" placeholder="Enter course Duration" value='{{ $course->duration }}'>
+                <select class="form-control" name="duration" id="duration" required>
+                        
+                    @if (count($durations)>0)
+                       
+                        @foreach ($durations as $duration)
+                          @if($duration->id == $course->duration->id)
+                            <option selected value="{{$duration->id}}">{{$duration->name}}</option>
+                          @else
+                            <option value="{{$duration->id}}">{{$duration->name}}</option>
+                          @endif
+                            @endforeach
+                    @else
+                        <option disabled selected>Please add the durations</option>
+                    @endif
+                </select>
               </div>
             </div>
           </div>
@@ -74,7 +88,7 @@ $('.ui.dropdown')
     
   })
 ;
- 
+$('#duration').dropdown();
 </script>
 @endsection
   <!-- <div class="row">

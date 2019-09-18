@@ -20,10 +20,14 @@ class CreateRegistrationsTable extends Migration
            
             $table->string('name');
             $table->string('email');
-            $table->string('college');
+            $table->unsignedBigInteger('college_id');
+            $table->foreign('college_id')->references('id')->on('colleges')->onDelete('restrict');
             $table->string('phoneno');
             $table->string('semester');
             $table->string('training_type');
+            $table->unsignedBigInteger('degree_id');
+            $table->foreign('degree_id')->references('id')->on('degrees')->onDelete('restrict');
+            $table->string('stream');
             $table->string('extra_context')->nullable();
             $table->float('payable_fees',8,2);
             $table->float('discount',8,2);

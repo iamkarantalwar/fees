@@ -4,6 +4,14 @@
 <html lang="en">
 
 <head>
+  <style>
+  input[type='text']{
+    text-transform: uppercase;
+  }  
+  .invalidform{
+    border: 1px solid red !important;
+  }
+  </style>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/img/apple-icon.png') }}">
   <link rel="icon" type="image/png" href="./assets/img/favicon.png') }}">
@@ -36,7 +44,7 @@
           </div>
         </a>
         <a class="simple-text logo-normal">
-          {{ Auth::user()->name }}
+         
          
         </a>
       </div>
@@ -50,18 +58,7 @@
             </a>
           </li>
          
-          <li class="{{ Str::is('admin.context.*',$current_route) ? 'active':''}}">
-            <a href="{{ route('admin.context.index') }}">
-              <i class="nc-icon nc-diamond"></i>
-              <p>Context</p>
-            </a>
-          </li>
-          <li class="{{ Str::is('admin.course.*',$current_route) ? 'active':''}}">
-            <a href="{{ route('admin.course.index') }}">
-              <i class="nc-icon nc-pin-3"></i>
-              <p>Courses</p>
-            </a>
-          </li>
+         
           <li class="{{ Str::is('admin.enquiry.*',$current_route) ? 'active':''}}">
             <a href="{{ route('admin.enquiry.index') }}">
               <i class="nc-icon nc-bell-55"></i> 
@@ -86,18 +83,39 @@
               <p>Fees Section</p>
             </a>
         </li>
+        <li class="{{ Str::is('admin.degree.*',$current_route) ? 'active':''}}">
+            <a href="{{ route('admin.degree.index') }}">
+              <i class="fa fa-graduation-cap"></i>
+              <p>Degree Section</p>
+            </a>
+          </li>
         <li class="{{ Str::is('admin.college.*',$current_route) ? 'active':''}}">
             <a href="{{ route('admin.college.index') }}">
               <i class="nc-icon nc-laptop"></i>
               <p>College Section</p>
             </a>
           </li>
-     <!--       <li class="active-pro">
-            <a href="./upgrade.html">
-              <i class="nc-icon nc-spaceship"></i>
-              <p>Upgrade to PRO</p>
-            </a>
-          </li> -->
+          
+         
+            <li class="{{ Str::is('admin.course.*',$current_route) ? 'active':''}}">
+              <a href="{{ route('admin.course.index') }}">
+                <i class="nc-icon nc-pin-3"></i>
+                <p>Courses</p>
+              </a>
+            </li>
+            <li class="{{ Str::is('admin.duration.*',$current_route) ? 'active':''}}">
+                <a href="{{ route('admin.duration.index') }}">
+                  <i class="fa fa-clock-o"></i>
+                  <p>Course Duration</p>
+                </a>
+              </li>
+            <li class="{{ Str::is('admin.context.*',$current_route) ? 'active':''}}">
+                <a href="{{ route('admin.context.index') }}">
+                  <i class="nc-icon nc-diamond"></i>
+                  <p>Context</p>
+                </a>
+              </li>
+    
         </ul>
       </div>
     </div>
@@ -138,7 +156,7 @@
                 @csrf
                 
                 <button class="nav-link btn-rotate" type="submit">
-                  <i class="nc-icon nc-settings-gear-65"></i>
+                  <i class="fa fa-sign-out"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Account</span>
                   </p>
