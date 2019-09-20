@@ -14,7 +14,7 @@
          <h2 class="card-title">Show Registration</h2>
       </div>
       <div class="card-body">
-         <form action="{{ route('admin.registration.update',['id'=>$registration->id])}}" method="POST">
+         <form action="{{ route('admin.registration.update',['registration'=>$registration->id])}}" method="POST">
             @method("PATCH")
             @csrf
             <div class="row">
@@ -47,9 +47,9 @@
                           @if(count($colleges)>0)
                               @foreach($colleges as $college)
                               @if ($college->id == $registration->college->id)
-                                 <option selected value="{{ $college->college_name }}">{{ $college->college_name }}</option>
+                                 <option selected value="{{ $college->id }}">{{ $college->college_name }}</option>
                               @else
-                                 <option value="{{ $college->college_name }}">{{ $college->college_name }}</option>
+                                 <option value="{{ $college->id }}">{{ $college->college_name }}</option>
                               @endif                                
                               @endforeach
                             @endif
@@ -108,7 +108,7 @@
                         collect($courses)->map(function($item) use ($registration_courses){
                             if($registration_courses->contains('id',$item->id))
                             {
-                              echo "<option selected value='".$item->id."'>".$item->name."</option>";
+                              echo "<option selected value='".$item->id."'>".$item->name." - ".$item->duration->name."</option>";
                             }
                             else
                             {

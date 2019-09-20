@@ -14,7 +14,7 @@
                 <h2 class="card-title">Edit Enquiry</h2>
               </div>
               <div class="card-body">
-                <form action="{{ route('admin.enquiry.update',['id'=>$enquiry->id])}}" method="POST">
+                <form action="{{ route('admin.enquiry.update',['enquiry'=>$enquiry->id])}}" method="POST">
                   @method("PUT")
                   @csrf       
                   <div class="row">
@@ -168,7 +168,7 @@
                     <div class="update ml-auto mr-auto">                    
                         <button type="submit" class="btn btn-outline-primary btn-round">Update Enquiry</button>
                         </form>
-                        <form class="deleteform" action="{{ route('admin.enquiry.destroy',['id'=>$enquiry->id]) }}" method="POST">
+                        <form class="deleteform" action="{{ route('admin.enquiry.destroy',['enquiry'=>$enquiry->id]) }}" method="POST">
                             @method("DELETE")
                             @csrf
                             <button type="submit" class="btn btn-outline-danger btn-round">Delete Enquiry</button>

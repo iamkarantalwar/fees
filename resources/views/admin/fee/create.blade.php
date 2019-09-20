@@ -59,9 +59,17 @@
                      <input type="text" class="form-control" name="payable_amount" value="0.00">
                   </div>
                </div>
-            </div>
-            <div class="row">
-                <input type="buttons" id="sub-add-form" value="Enter Fees" class="btn btn-lg btn-outline-primary">
+           
+            <div class="row justify-content-between">
+               <div class="col-4">
+                     <input type="buttons" id="sub-add-form" value="Enter Fees" class="btn btn-lg btn-outline-primary">
+               </div>
+               <div class="col-offset-4 col-4">
+                  <a href="{{ route('generateinvoice',['id'=>$enquiry->id]) }}">
+                     <input type="buttons"  value="Print Recipt" class="btn btn-lg btn-outline-success">
+                  </a>
+               </div>
+               
             </div>
             </div>
             <div class="row align-item-center" id="passwordverify" style="display:none;">

@@ -56,7 +56,7 @@
 
                @if(count($registrations)>0)
                 @foreach($registrations as $registration)
-                    <tr data-href="{{ route('admin.registration.show',['id'=>$registration->id]) }}" class="pointer">
+                    <tr data-href="{{ route('admin.registration.show',['registration'=>$registration->id]) }}" class="pointer">
                       <td> {{ $loop->iteration }}</td>
                       <td> {{ $registration->name }} </td>
                       <td> {{ $registration->phoneno }} </td>

@@ -178,7 +178,7 @@
                               </button>     
                            </td>
                            <td>
-                              <form action="{{ route('admin.calling.destroy',['id'=>$call->id]) }}" method="POST">
+                              <form action="{{ route('admin.calling.destroy',['calling'=>$call->id]) }}" method="POST">
                                   @method('DELETE')
                                   @csrf
                                  <button type="submit" class="btn btn-md btn-outline-danger">
@@ -207,7 +207,7 @@
      var status =tr.find('td:nth-child(2)').text().trim();
      var narration = tr.find('td:nth-child(3)').text().trim();
     
-     var rout = "{{ route('admin.calling.update',['id'=>':id']) }}";
+     var rout = "{{ route('admin.calling.update',['calling'=>':id']) }}";
      rout = rout.replace(":id",tr.attr('id'));
 
      let form  = $('#editform').find('form');

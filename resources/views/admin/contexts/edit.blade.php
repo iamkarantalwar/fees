@@ -14,7 +14,7 @@
                 <h5 class="card-title">Edit Context</h5>
               </div>
               <div class="card-body">
-                <form action="{{ route('admin.context.update',['id'=>$context->id]) }}" method="POST">
+                <form action="{{ route('admin.context.update',['context'=>$context->id]) }}" method="POST">
                     @method('PUT')
                     @csrf
                  

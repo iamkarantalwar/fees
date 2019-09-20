@@ -13,8 +13,8 @@ class EnquiryController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth');
-        // $this->user =  \Auth::user();
+        $this->middleware('auth');
+      
     }
     public function index()
     {
@@ -156,19 +156,20 @@ class EnquiryController extends Controller
   
     public function destroy($id)
     {
-        try
-        {  
-          
-            $enquiry = Enquiry::findOrFail($id);
+        $enquiry = Enquiry::findOrFail($id);
+        $callings = count($enquiry->callings);
+
+        if($callings==0)
+        {
+            $enquiry->courses()->detach();
             $enquiry->delete();
-            return redirect()->route('admin.enquiry.index')
-                             ->with('danger','Enquiry has been deleted.');
+                return redirect()->route('admin.enquiry.index')
+                                 ->with('danger','Enquiry has been deleted.');
         }
-        catch(Exception $e)
-        {   
-            
+        else {
             return redirect()->back()->with('danger','You cannot delete this enquiry.It is associated with other fields.');
         }
-      
+            
+       
     }
 }

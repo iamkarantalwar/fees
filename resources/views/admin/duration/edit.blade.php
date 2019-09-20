@@ -14,7 +14,7 @@
                 <h5 class="card-title">Edit Duration</h5>
               </div>
               <div class="card-body">
-                <form action="{{ route('admin.duration.update',['id'=>$duration->id]) }}" method="POST">
+                <form action="{{ route('admin.duration.update',['duration'=>$duration->id]) }}" method="POST">
                     @csrf
                     @method('PATCH')
                  

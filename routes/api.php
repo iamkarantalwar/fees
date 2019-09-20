@@ -12,7 +12,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/admin/getcourse/',function(Request $request){
     $course_id = $request->get('course_id');
-    $course = Course::findOrFail(2)->first();   
+    $course = Course::findOrFail($course_id)->first();   
     return $course; 
     })->name('api.course.getcourse');
 

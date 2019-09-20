@@ -14,7 +14,7 @@
                 <h5 class="card-title">Edit Degree</h5>
               </div>
               <div class="card-body">
-                <form action="{{ route('admin.degree.update',['id'=>$degree->id]) }}" method="POST">
+                <form action="{{ route('admin.degree.update',['degree'=>$degree->id]) }}" method="POST">
                     @csrf
                     @method("PATCH")
                  

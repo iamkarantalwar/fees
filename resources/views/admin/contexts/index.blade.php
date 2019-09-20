@@ -73,13 +73,13 @@
                           <th>{{ $context ->context }}</th>
 
                           <td>
-                            <a href="{{ route('admin.context.edit',[''=>$context->id]) }}">
+                            <a href="{{ route('admin.context.edit',['context'=>$context->id]) }}">
                               <button type="submit" class="btn btn-outline-warning">Update Context</button>
                             </a>
                           </td>
 
                           <td>
-                            <form class="deleteform" action="{{ route('admin.context.destroy',[''=>$context->id]) }}" method="POST">
+                            <form class="deleteform" action="{{ route('admin.context.destroy',['context'=>$context->id]) }}" method="POST">
                               @csrf
                               @method('DELETE')                           
                               <button type="submit"  class="btn btn-outline-danger">Delete Context</button>

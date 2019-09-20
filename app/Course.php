@@ -17,4 +17,13 @@ class Course extends Model
     {
         return $this->belongsTo(Duration::class);
     }
+
+    public function registrations()
+    {
+        return $this->belongsToMany(Registration::class);
+    }
+    public function enquiries()
+    {
+        return $this->belongsToMany(Enquiry::class);
+    }
 }

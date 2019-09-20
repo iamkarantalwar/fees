@@ -147,12 +147,12 @@
                   
                     <div class="row ml-auto mr-auto">
                     <div class="col-md-4">
-                     <a href="{{ route('admin.registration.edit',['id'=>$registration->id]) }}">
+                     <a href="{{ route('admin.registration.edit',['registration'=>$registration->id]) }}">
                       <button type="button" class="btn btn-outline-primary btn-round">Edit Registration</button>
                      </a>
                      </div>
                      <div class="col-md-4 ml-4">
-                        <form action="{{ route('admin.registration.destroy',['id'=>$registration->id]) }}" method="post">
+                        <form action="{{ route('admin.registration.destroy',['registration'=>$registration->id]) }}" method="post">
                               @method("DELETE")
                               @csrf
                               <button type="submit" class="btn btn-outline-danger btn-round">Delete Regestration</button>

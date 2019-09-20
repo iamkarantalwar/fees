@@ -11,18 +11,19 @@ function appendtablebody(response){
             })
             let installment_no = student.fees.length == 1 ? "Registration Only": student.fees.length;
             var last_fees = student.fees.pop();
-            
-          //  var pending_amount = last_fees == undefined ? student.total_fees-student.registration_amount : 'dasda wait';
-            tbody +=`<tr class='cursor' onclick="changeModelRoute(${student.id})"><td>${srno}</td><td>${student.name}</td><td>${student.phoneno}</td>
-                        <td>${student.college.college_name}</td><td>${courses}</td><td>${student.semester}</td>
-                        <td>${last_fees.payable_amount}</td>
-                        <td>${last_fees.pending_amount}</td>
-                        <td>${installment_no}</td>
-                    </tr>`;   
+        
+        
+                    tbody +=`<tr class='cursor' onclick="changeModelRoute(${student.id})"><td>${srno}</td><td>${student.name}</td><td>${student.phoneno}</td>
+                    <td>${student.college.college_name}</td><td>${courses}</td><td>${student.semester}</td>
+                    // <td>${last_fees.payable_amount}</td>
+                    <td>${last_fees.pending_amount}</td>
+                    <td>${installment_no}</td>
+                </tr>`;           
                     srno ++;  
-  
+            
          
     });
+    console.log(tbody);
     $('#tbody').html(tbody);   
 }
 

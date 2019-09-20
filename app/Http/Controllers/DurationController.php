@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use Exception;
 class DurationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+      
+    }
     public function index()
     {
         $durations = Duration::all();

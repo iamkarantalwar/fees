@@ -145,4 +145,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-
+Route::get('pdf/{id}','PDFInvoiceGenerate@index')->name('generateinvoice');

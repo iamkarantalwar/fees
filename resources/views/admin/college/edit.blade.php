@@ -22,7 +22,7 @@
         <h5 class="card-title">Edit College</h5>
         </div>
         <div class="card-body">
-        <form action="{{ route('admin.college.update',['id'=>$college->id]) }}" method="POST">
+        <form action="{{ route('admin.college.update',['college'=>$college->id]) }}" method="POST">
             @method('PATCH')  
             @csrf           
             

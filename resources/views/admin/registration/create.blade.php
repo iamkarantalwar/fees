@@ -57,7 +57,7 @@
                                     @endforeach                                  
                               @else
                                     @foreach($colleges as $college)                                 
-                                       <option value="{{ $college->college_name }}">{{ $college->college_name }}</option>
+                                       <option value="{{ $college->id }}">{{ $college->college_name }}</option>
                                     @endforeach                                  
                               @endif     
                           @else
@@ -190,7 +190,7 @@
                <div class="col-md-6 pl-1">
                   <div class="form-group">
                      <label>Discount</label>
-                     <input type="text" class="form-control" id="discount" disabled name="discount" required placeholder="Enter the discount" value="0.00">
+                     <input type="text" class="form-control" id="discount" readonly name="discount" required placeholder="Enter the discount" value="0.00">
                   </div>
                </div>
             </div>

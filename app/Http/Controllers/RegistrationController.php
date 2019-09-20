@@ -9,13 +9,14 @@ use App\Enquiry;
 use App\Fee;
 use App\College;
 use App\Degree;
-
+use \Auth;
+use Exception;
 class RegistrationController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth');
-        // $this->user =  \Auth::user();
+        $this->middleware('auth');
+      
     }
     public function index()
     {
@@ -89,6 +90,7 @@ class RegistrationController extends Controller
         $fee->recipt_no = $request->post('reciept_no');
         $fee->payable_amount = $request->post('registration_amount');
         $fee->pending_amount =  $request->post('due_fees');
+        $fee->user_id = Auth::user()->id;
         $fee->save();
         
         $courses = array_values($request->post('course'));
@@ -135,12 +137,12 @@ class RegistrationController extends Controller
         $registration->phoneno = $request->post('phoneno');
         $registration->email = $request->post('email');
         $registration->semester = $request->post('semester');
-        $registration->college = $request->post('college');
+        $registration->college_id = $request->post('college');
       
         $registration->narration = $request->post('narration');
         $registration->training_type = $request->post('training_type');
         $registration->extra_context = $request->post('extra_context');
-        $registration->fees = $request->post('fees');
+        $registration->payable_fees = $request->post('fees');
         $registration->discount = $request->post('discount');
         $registration->extra_charges= $request->post('extra_charges');
         $registration->narration = $request->post('narration');
@@ -169,12 +171,9 @@ class RegistrationController extends Controller
     
     public function destroy(Registration $registration)
     {
-        
-        $registration->contexts()->detach();
-        $registration->courses()->detach();
-        $registration->delete();
-        return redirect()->route('admin.registration.index')
-                         ->with('danger','Registration has been delete.');
+        return redirect()->back()->with('danger','You cannot delete this registration.It is associated with other fields.');
+       
+      
 
     }
 }

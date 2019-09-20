@@ -11,8 +11,8 @@ class CourseController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth');
-        // $this->user =  \Auth::user();
+        $this->middleware('auth');
+      
     }
     public function index()
     {
@@ -93,20 +93,19 @@ class CourseController extends Controller
    
     public function destroy(Course $course)
     {
-       
-        try
-        {  
+        $enquiries = $course->enquiries;
+        $regestrations = $course->registrations;
+       if(count($enquiries)==0 && count($regestrations)==0)
+       {
             $course->contexts()->detach();
-            $course->delete();
-           
+            $course->delete();           
             return redirect()->route('admin.course.index',$course->id)
                              ->with('danger','Course has been delete.');
-        }
-        catch(Exception $e)
-        {   
-            
-            return redirect()->back()->with('danger','You cannot delete this course.It is associated with other fields.');
-        }
+       }
+       else{
+        return redirect()->back()->with('danger','You cannot delete this course.It is associated with other fields.');
+       }
+      
        
     }
 

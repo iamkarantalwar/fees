@@ -5,8 +5,14 @@ namespace App\Http\Controllers;
 use App\Degree;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 class DegreeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+      
+    }
     
     public function index()
     {
@@ -69,8 +75,16 @@ class DegreeController extends Controller
    
     public function destroy(Degree $degree)
     {
-        $degree->delete();
-        return redirect()->back()->with('danger','Degree has been Deleted.');
+       
+        try
+        {  
+            $degree->delete();
+            return redirect()->back()->with('danger','Context has been deleted');
+        }
+        catch(Exception $e)
+        {   
+            return redirect()->back()->with('danger','You cannot delete this context.It is associated with other fields.');
+        }
 
     }
 }

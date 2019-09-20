@@ -68,7 +68,7 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <div class="embed-responsive embed-responsive-1by1">
-                                                                <iframe class="embed-responsive-item" id="model-route"  src="{{ route('admin.college.edit',['id'=>$college->id]) }}" allowfullscreen></iframe>
+                                                                <iframe class="embed-responsive-item" id="model-route"  src="{{ route('admin.college.edit',['college'=>$college->id]) }}" allowfullscreen></iframe>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -80,7 +80,7 @@
                                                 </div>
                                     </td>
                                     <td>
-                                        <form class="deleteform" action="{{ route('admin.college.destroy',['id'=>$college->id]) }}" method="POST" >
+                                        <form class="deleteform" action="{{ route('admin.college.destroy',['college'=>$college->id]) }}" method="POST" >
                                             @method('DELETE')
                                             @csrf
                                             <button type="submit" class="btn btn-outline-danger">Delete</button>

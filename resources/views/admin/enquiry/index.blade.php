@@ -53,7 +53,7 @@
 
                @if(count($enquiries)>0)
                 @foreach($enquiries as $enquiry)
-                    <tr data-href="{{ route('admin.enquiry.show',['id'=>$enquiry->id]) }}" class="pointer">
+                    <tr data-href="{{ route('admin.enquiry.show',['enquiry'=>$enquiry->id]) }}" class="pointer">
                       <td> {{ $loop->iteration }}</td>
                       <td> {{ $enquiry->name }} </td>
                       <td> {{ $enquiry->phone_no }} </td>

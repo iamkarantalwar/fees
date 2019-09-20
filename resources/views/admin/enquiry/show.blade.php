@@ -113,12 +113,12 @@
                   
                     <div class="row ml-auto mr-auto">
                     <div class="col-md-4">
-                     <a href="{{ route('admin.enquiry.edit',['id'=>$enquiry->id]) }}">
+                     <a href="{{ route('admin.enquiry.edit',['enquiry'=>$enquiry->id]) }}">
                       <button type="button" class="btn btn-outline-primary btn-round">Edit Enquiry</button>
                      </a>
                      </div>
                      <div class="col-md-4">
-                      <form class="deleteform" action="{{ route('admin.enquiry.destroy',['id'=>$enquiry->id]) }}" method="post">
+                      <form class="deleteform" action="{{ route('admin.enquiry.destroy',['enquiry'=>$enquiry->id]) }}" method="post">
                             @method("DELETE")
                             @csrf
                             <button type="submit" class="btn btn-outline-danger btn-round">Delete Enquiry</button>
@@ -126,7 +126,7 @@
                       </div>
                       <div class="col-md-4 ">
                             
-                          <a href="{{ route('admin.registration.create',['enquiryid'=>$enquiry->id]) }}">
+                          <a href="{{ route('admin.registration.create',['enquiry'=>$enquiry->id]) }}">
                             <button type="submit" class="btn btn-outline-success btn-round">Register Enquiry</button>
                           </a>
                       </div>

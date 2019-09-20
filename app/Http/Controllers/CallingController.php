@@ -10,7 +10,11 @@ use App\Enquiry;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class CallingController extends Controller
-{
+{public function __construct()
+    {
+        $this->middleware('auth');
+      
+    }
    
     public function index()
     {

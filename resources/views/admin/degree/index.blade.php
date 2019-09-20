@@ -73,13 +73,13 @@
                           <th>{{ $degree ->name }}</th>
 
                           <td>
-                            <a href="{{ route('admin.degree.edit',[''=>$degree->id]) }}">
+                            <a href="{{ route('admin.degree.edit',['degree'=>$degree->id]) }}">
                               <button type="submit" class="btn btn-outline-warning">Update Degree</button>
                             </a>
                           </td>
 
                           <td>
-                            <form class="deleteform" action="{{ route('admin.degree.destroy',[''=>$degree->id]) }}" method="POST">
+                            <form class="deleteform" action="{{ route('admin.degree.destroy',['degree'=>$degree->id]) }}" method="POST">
                               @csrf
                               @method('DELETE')                           
                               <button type="submit"  class="btn btn-outline-danger">Delete Degree</button>

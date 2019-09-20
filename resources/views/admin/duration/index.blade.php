@@ -81,13 +81,13 @@
                           <th>{{ $duration ->name }}</th>
 
                           <td>
-                            <a href="{{ route('admin.duration.edit',[''=>$duration->id]) }}">
+                            <a href="{{ route('admin.duration.edit',['duration'=>$duration->id]) }}">
                               <button type="submit" class="btn btn-outline-warning">Edit Duration</button>
                             </a>
                           </td>
 
                           <td>
-                            <form class="deleteform" action="{{ route('admin.duration.destroy',[''=>$duration->id]) }}" method="POST">
+                            <form class="deleteform" action="{{ route('admin.duration.destroy',['duration'=>$duration->id]) }}" method="POST">
                               @csrf
                               @method('DELETE')                           
                               <button type="submit"  class="btn btn-outline-danger">Delete Duration</button>
