@@ -21,7 +21,7 @@ class CreateRegistrationsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->unsignedBigInteger('college_id');
-            $table->foreign('college_id')->references('id')->on('colleges')->onDelete('restrict');
+            // $table->foreign('college_id')->references('id')->on('colleges')->onDelete('restrict');
             $table->string('phoneno');
             $table->string('semester');
             $table->string('training_type');

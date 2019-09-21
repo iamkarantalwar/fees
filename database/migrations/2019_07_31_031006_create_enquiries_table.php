@@ -20,7 +20,7 @@ class CreateEnquiriesTable extends Migration
             $table->string('email');
             $table->string('semester');
             $table->unsignedBigInteger('college_id');
-            $table->foreign('college_id')->references('id')->on('colleges')->onDelete('restrict');
+            // $table->foreign('college_id')->references('id')->on('colleges')->onDelete('restrict');
             $table->unsignedBigInteger('degree_id');
             $table->foreign('degree_id')->references('id')->on('degrees')->onDelete('restrict');
             $table->unsignedBigInteger('duration_id'); 
