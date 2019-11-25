@@ -1,5 +1,5 @@
 var s = window.route.fetchstudents;
-
+alert("helolo0w orl");
 function appendtablebody(response){
     var tbody="";
     var srno = 1;

@@ -40,22 +40,27 @@ Route::resource('admin/enquiry', 'EnquiryController',
         'destroy'   =>'admin.enquiry.destroy',
         'update'    =>'admin.enquiry.update',
         'show'      =>'admin.enquiry.show',
+        
        
     ]
 ]);
-Route::resource('admin/registration', 'RegistrationController',
-[
-   'names'=>[
-        'index'     =>'admin.registration.index',
-        'create'    =>'admin.registration.create',
-        'store'     =>'admin.registration.store',
-        'edit'      =>'admin.registration.edit',
-        'destroy'   =>'admin.registration.destroy',
-        'update'    =>'admin.registration.update',
-        'show'      =>'admin.registration.show',
-       
-    ]
-]);
+
+Route::group(['prefix' => 'admin/'], function () 
+{
+    Route::resource('registration', 'RegistrationController',[
+        'names'=>[
+                'index'     =>'admin.registration.index',
+                'create'    =>'admin.registration.create',
+                'store'     =>'admin.registration.store',
+                'edit'      =>'admin.registration.edit',
+                'destroy'   =>'admin.registration.destroy',
+                'update'    =>'admin.registration.update',
+                'show'      =>'admin.registration.show',
+                 ]
+         ]);
+    Route::get("form/",'RegistrationController@form')->name('admin.registration.form');    
+});
+
 Route::resource('admin/calling', 'CallingController',
 [
    'names'=>[
@@ -146,3 +151,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::get('pdf/{id}','PDFInvoiceGenerate@index')->name('generateinvoice');
+
+Route::get("/abc",function(){
+    return view("admin.registration.form");
+});

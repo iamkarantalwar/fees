@@ -69,36 +69,39 @@ class RegistrationController extends Controller
         $registration->semester = $request->post('semester');
         $registration->college_id = $request->post('college');
         $registration->degree_id = $request->post('degree');
-        $registration->narration = $request->post('narration');
+        $registration->other = $request->post('other');
         $registration->training_type = $request->post('training_type');
         $registration->extra_context = $request->post('extra_context');
-        $registration->payable_fees = $request->post('fees');
+        $registration->payable_fees = $request->post('total_fees');
         $registration->discount = $request->post('discount');
-        $registration->extra_charges= $request->post('extra_charges');
-        $registration->narration = $request->post('narration');
+    
+   
         $registration->refrence = $request->post('refrence');
-        $registration->total_fees = $request->post('total_fees');
+      
         $registration->stream = $request->post('stream');
         $registration->enquiry_id = $request->post('enquiry_id');
-        $registration->reciept_no = $request->post('reciept_no');
-        $registration->registration_amount = $request->post('registration_amount');
-        $registration->due_fees = $request->post('due_fees');
+      
+
+        $registration->gender=$request->post('gender');
+        $registration->address = $request->post("address");
+        $registration->fname = $request->post("fname");
+        $registration->relation_type=$request->post('relation_type');
         $registration->save();
 
         $fee  = new Fee();
         $fee->registration_id = $registration->id;
         $fee->recipt_no = $request->post('reciept_no');
         $fee->payable_amount = $request->post('registration_amount');
-        $fee->pending_amount =  $request->post('due_fees');
+        $fee->pending_amount = $request->post('total_fees')- $request->post('registration_amount')-$request->post('discount');
         $fee->user_id = Auth::user()->id;
         $fee->save();
         
-        $courses = array_values($request->post('course'));
-        $registration ->courses() ->attach($courses);
+       // $courses = array_values($request->post('course'));
+        $registration ->courses() ->attach(array($request->post('course')));
 
        
-        $contexts =  array_values($request->post('context'));
-        $registration ->contexts() ->attach($contexts,['course_id'=>$courses[0]]);
+        //$contexts =  array_values($request->post('context'));
+        //$registration ->contexts() ->attach($contexts,['course_id'=>$courses[0]]);
        
         return redirect()->back()->with('success','Registration has been updated.');
     }
@@ -175,5 +178,37 @@ class RegistrationController extends Controller
        
       
 
+    }
+
+    public function form(Request $request){
+        $degrees = Degree::all();
+        $enquiryid = $request->get('enquiryid');
+        $courses = Course::all();
+        $colleges = College::all();
+        if ($enquiryid!=null)
+         {
+           $register = Registration::where('id',$enquiryid)->get();          
+           if($register->isEmpty())
+           {
+                $enquiry = Enquiry::findOrFail($enquiryid);     
+            
+                return view('admin.registration.create')->with(['courses'=>$courses,
+                                                                'enquiry'=>$enquiry,
+                                                                'colleges'=>$colleges,
+                                                                'degrees'=>$degrees]);
+           }
+           else
+           {
+                return redirect()->back()->with('danger','This Enquiry is already registered with us.');
+           }         
+         }
+         else
+         {           
+            return view("admin.registration.form")->with(['courses'=>$courses,
+                                                            'colleges'=>$colleges,
+                                                            'degrees'=>$degrees]);
+         }
+ 
+       
     }
 }

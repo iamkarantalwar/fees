@@ -10,12 +10,12 @@ function appendtablebody(response){
             student.courses.forEach((course)=>{
                 courses+=`${course.name}<br/>`;
             })
-
+            let semester = student.semester != null ? student.semester : "";
             var last_call = student.callings.pop();
-           
+            let college_name = student.college instanceof Object  ? student.college.college_name : "";
             tbody +=`<tr class='cursor' onclick="changeModelRoute(${student.id})"><td>${srno}</td><td>${student.name}</td>
             <td>${student.phone_no}</td>
-                        <td>${student.college.college_name}</td><td>${courses}</td><td>${student.semester}</td>
+                        <td>${college_name}</td><td>${courses}</td><td>${semester}</td>
                         <td>${last_call!=undefined ? last_call.created_at:"No Call Yet"}</td>
                         <td>${last_call!=undefined ? last_call.status:"Still Pending"}</td>
                     </tr>`;   

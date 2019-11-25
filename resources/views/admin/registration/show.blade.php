@@ -45,7 +45,7 @@
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>College</label>
-                        <input type="text" class="form-control" name="college" required placeholder="Enter the college" value="{{ $registration->college->college_name }}" disabled>
+                        <input type="text" class="form-control" name="college" required placeholder="Enter the college" value="@if(is_array($registration->college)) {{ $registration->college->college_name }} @endif" disabled>
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">

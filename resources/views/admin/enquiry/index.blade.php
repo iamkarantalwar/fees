@@ -57,7 +57,7 @@
                       <td> {{ $loop->iteration }}</td>
                       <td> {{ $enquiry->name }} </td>
                       <td> {{ $enquiry->phone_no }} </td>
-                      <td> {{ $enquiry->college->college_name }} </td>
+                      <td>@if($enquiry->college!="") {{ $enquiry->college->college_name }}@endif </td>
                    
                       <td> 
                           @foreach($enquiry->courses as $course)

@@ -73,8 +73,7 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
-            'prefix_indexes' => true,
-            
+            'prefix_indexes' => true,            
             'sslmode' => 'prefer',
             'schema' => 'public',
         ],
@@ -105,7 +104,7 @@ return [
     |
     */
 
-    'migrations' => 'public.migrations',
+    'migrations' => 'migrations',
 
     /*
     |--------------------------------------------------------------------------

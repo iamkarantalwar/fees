@@ -13,7 +13,7 @@ class EnquiryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+     //   $this->middleware('auth');
       
     }
     public function index()
@@ -65,8 +65,15 @@ class EnquiryController extends Controller
         $enquiry->degree_id = $request->post('degree');
         $enquiry->stream = $request->post('stream');
         $enquiry->save();
-        $courses = array_values($request->post('course'));
-        $enquiry ->courses() ->attach($courses);
+   
+    $discounts = $request->post("discount");
+    $courses = $request->post("course");
+            // return $courses;
+        foreach(range(1,count($courses)-1) as $index){
+            $enquiry->courses()->attach($courses[$index],['discount'=>$discounts[$index]]);
+        }
+        // $courses = array_values($request->post('course'));
+        // $enquiry ->courses() ->attach($courses);
 
         return redirect()->back()->with('success','Enquiry has been saved.');
     }
@@ -124,7 +131,7 @@ class EnquiryController extends Controller
                 
         });   
         
-        return view('admin.enquiry.edit')->with(['courses'=>$courses_detail,
+        return view('admin.enquiry.edit')->with(['courses'=>$courses,
                                                  'enquiry'=>$enquiry,
                                                  'colleges'=>$colleges,
                                                  'durations'=>$durations,
@@ -147,8 +154,31 @@ class EnquiryController extends Controller
         $enquiry->degree_id = $request->post('degree');
         $enquiry->stream = $request->post('stream');
         $enquiry->save();
-        $courses = array_values($request->post('course'));
-        $enquiry ->courses()->sync($courses);
+        $discounts = $request->post("discount");
+        $courses = $request->post("course");
+        // print_r($discounts);
+        // print_r($courses);
+        // die;
+     $enquiry->courses()->detach();
+     if(count($courses)==count($discounts))
+     {
+        foreach(range(1,count($courses)-1) as $index){
+                
+            $enquiry->courses()->attach($courses[$index],['discount'=>$discounts[$index]]);
+
+        }
+     }
+     else{
+        foreach(range(0,count($courses)-1) as $index){
+                
+            $enquiry->courses()->attach($courses[$index],['discount'=>$discounts[$index+1]]);
+
+        }
+
+     }
+           
+        // $courses = array_values($request->post('course'));
+        // $enquiry ->courses()->sync($courses);
 
         return redirect()->back()->with('success','Enquiry has been updated.');
     }

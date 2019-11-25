@@ -12,8 +12,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "6.0.*",
         "laravel/tinker": "^1.0",
-        "phpoffice/phpspreadsheet": "^1.9",
-        
+        "phpoffice/phpspreadsheet": "^1.9",        
         "elibyy/tcpdf-laravel": "6.0.*"
         
     },

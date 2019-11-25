@@ -108,7 +108,7 @@ swal({
     icon: "warning",
     buttons: true,
     dangerMode: true,
-})
+      })
     .then((willDelete) => {
     if (willDelete) {
         

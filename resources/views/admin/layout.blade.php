@@ -44,7 +44,7 @@
           </div>
         </a>
         <a class="simple-text logo-normal">
-          {{ Auth::user()->name }}
+       
          
         </a>
       </div>

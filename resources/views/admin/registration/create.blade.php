@@ -7,263 +7,54 @@
 </script>
 @endif
 @endforeach
+<style>
+   .tooltip.top .tooltip-inner {
+   background-color:red;
+   }
+   .tooltip.top .tooltip-arrow {
+   border-top-color: red;
+   }
+   }
+</style>
+	
 <link rel="stylesheet" href="{{ asset('assets/select2/select2.min.css') }}">
 <div class="col-md-12">
-   <form action="{{ route('admin.registration.store') }}" method="POST" nonvalidate>
+   <form action="{{ route('admin.registration.store') }}" id="myForm" onsubmit="return formValid()" method="POST" novalidate>
       <div class="card card-user">
          <div class="card-header">
             <h2 class="card-title">Add Registration</h2>
          </div>
          <div class="card-body">
-            @csrf
-            <div class="row">
-               <div class="col-md-4 pr-1">
-                  <div class="form-group">
-                     <label>Name</label>
-                     <input type="text" class="form-control" name="name" required placeholder="Enter the name" 
-                        value="{{ !empty($enquiry) ? $enquiry->name :'' }}">
-                  </div>
-               </div>
-               <div class="col-md-4">
-                  <div class="form-group">
-                     <label for="exampleInputEmail1">Email address</label>
-                     <input type="email" class="form-control" name="email" required placeholder="Enter the email"
-                        value="{{ !empty($enquiry) ? $enquiry->email :'' }}">
-                  </div>
-               </div>
-               <div class="col-md-4 pl-1">
-                  <div class="form-group">
-                     <label>Phone No</label>
-                     <input type="text" class="form-control" name="phoneno" required placeholder="Enter the phone"  required value="{{ !empty($enquiry) ? $enquiry->phone_no :'' }}">
-                  </div>
-               </div>
-            </div>
-            <input type="hidden" name="enquiry_id" value="{{ !empty($enquiry) ? $enquiry->id :'' }}">
-            <div class="row">
-               <div class="col-md-6 pr-1">
-               <div class="form-group">
-                        <label>College Name</label>
-                        <select id="college" class="ui search dropdown col-md-12" name="college">
-                         
-                          @if(count($colleges)>0)
-                              @if (!empty($enquiry))
-                                 
-                                    @foreach($colleges as $college) 
-                                       @if($college->id == $enquiry->college->id)                                
-                                          <option selected value="{{ $college->id }}">{{ $college->college_name }}</option>
-                                       @else
-                                           <option value="{{ $college->id }}">{{ $college->college_name }}</option>
-                                       @endif
-                                    @endforeach                                  
-                              @else
-                                    @foreach($colleges as $college)                                 
-                                       <option value="{{ $college->id }}">{{ $college->college_name }}</option>
-                                    @endforeach                                  
-                              @endif     
-                          @else
-                              
-                          @endif
-                        </select>
-                        </div>         
-               </div>
-               <div class="col-md-6 pl-1">
-                  <!-- <div class="form-group">
-                     <label>Semester</label>
-                     <input type="text" class="form-control" name="semester" required placeholder="Enter the semester" 
-                        value="{{ !empty($enquiry) ? $enquiry->semester :'' }}">
-                  </div> -->
-                  <div class="form-group">
-                        <label>Semester</label>
-                          <select class="form-control" name="semester" placeholder="Enter the semester" id="semester">
-                        @if(!empty($enquiry))
-                            <option value="{{ $enquiry->semester }}" selected readonly>{{ $enquiry->semester }}</option>
-                        @endif
-                            <option value="1st">1st</option>
-                            <option value="2nd">2nd</option>
-                            <option value="3rd">3rd</option>
-                            <?php 
-                              for($i=4;$i<=8;$i++)
-                              {
-                                echo "<option value='".$i.'th'."'>".$i."th"."</option>";
-                              }
-                            ?>
-                          </select>
-                        
-                 
-                    </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-6 pr-1">
-                 <div class="form-group">
-                   <label>Degree</label>
-                   <select class="ui search dropdown col-md-12" name="degree" placeholder="Enter The Degree Name" id="degree">
-                       @if(count($degrees)>0)
-                           @if (!empty($enquiry))
-                           @foreach($degrees as $degree)
-                           @if ($degree->id == $enquiry->degree->id)
-                           <option selected value="{{ $degree->id }}">{{ $degree->name }}</option>
-                           @else
-                           <option value="{{ $degree->id }}">{{ $degree->name }}</option>
-                           @endif
-                             
-                           @endforeach
-                               
-                           @else
-                           @foreach($degrees as $degree)
-                             <option value="{{ $degree->id }}">{{ $degree->name }}</option>
-                           @endforeach
-                               
-                           @endif
-                           
-                         @endif
-                       </select>
-                   </div>          
-
-               </div>
-               <div class="col-md-6 pl-1">
-                 <div class="form-group">
-                   <label>Stream</label>
-                 <input type="text" name="stream" id="" class="form-control" placeholder="Enter The Stream" value="{{ !empty($enquiry) ? $enquiry->stream :'' }}">
-                   
-                 </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-6 pr-1">
-                  <div class="form-group">
-                     <label>Course</label><br/>
-                     <select class="ui search dropdown col-md-12" name="course[]" id="course" placeholder="Enter the context" required >
-                        <option value="" disabled="" selected="">Select Course</option>
-                        @if(count($courses)>0)
-                        @if(!empty($enquiry))
-                        @foreach($courses as $course)
-                        @if($course->id == $enquiry->courses[0]->id)
-                        <option selected value="{{ $course->id }}">{{ $course->name }} - {{ $course->duration->name }}</option>
-                        @else
-                        <option value="{{ $course->id }}">{{ $course->name }} - {{ $course->duration->name }}</option>
-                        @endif
-                        @endforeach
-                        @else 
-                        @foreach($courses as $course)
-                        <option value="{{ $course->id }}">{{ $course->name }} - {{ $course->duration->name }}</option>
-                        @endforeach
-                        @endif
-                        @endif
-                     </select>
-                  </div>
-               </div>
-               <div class="col-md-6 pl-1" >
-                  <div class="form-group" id="contexts-div">
-                     <label>Context</label>
-                     <select class="ui search dropdown col-md-12" multiple="" required name="context[]" id="contexts" placeholder="Enter the context" >
-                        @if(!empty($enquiry))
-                        @foreach($enquiry->courses[0]->contexts as $context)
-                        <option value='{{ $context->id }}' selected="">{{ $context->context }}</option>
-                        @endforeach
-                        @endif
-                     </select>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-6 pr-1">
-                  <div class="form-group">
-                     <label>Extra Course</label>
-                     <input type="text" class="form-control" name="extra_context"  placeholder="Enter any extra course" value="">
-                  </div>
-               </div>
-               <div class="col-md-6 pl-1">
-                  <div class="form-group">
-                     <label>Training Type</label>
-                     <input type="text" class="form-control" name="training_type" required placeholder="Enter the training type" value="">
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-6 pr-1">
-                  <div class="form-group">
-                     <label>Extra Charges</label>
-                     <input type="text" class="form-control" id="extra_charges" name="extra_charges" required placeholder="Enter the extra charges" value="0.00">
-                  </div>
-               </div>
-               <div class="col-md-6 pl-1">
-                  <div class="form-group">
-                     <label>Discount</label>
-                     <input type="text" class="form-control" id="discount" readonly name="discount" required placeholder="Enter the discount" value="0.00">
-                  </div>
-               </div>
-            </div>
-            <input type="hidden" id="course_fees" value="{{ !empty($enquiry) ? $enquiry->courses[0]->fees: '0.00' }}">
-            <div class="row">
-               <div class="col-md-6 pr-1">
-                  <div class="form-group">
-                     <label>Fees</label>
-                     <input type="text" class="form-control" id="fees" name="fees" required placeholder="Enter the college" value="{{ !empty($enquiry) ? $enquiry->courses[0]->fees : '0.00'}}">
-                  </div>
-               </div>
-               <div class="col-md-6 pl-1">
-                  <div class="form-group">
-                     <label>Total Fees</label>
-                     <input type="text" class="form-control" readonly id="total_fees" name="total_fees" required placeholder="Enter the semester" value="{{ !empty($enquiry) ? $enquiry->courses[0]->fees : '0.00'}}">
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-6 pr-1">
-                  <div class="form-group">
-                     <label>Registration Amount</label>
-                     <input type="text" class="form-control" id="registration_amount" name="registration_amount" required placeholder="Enter the Amount" value="0.00">
-                  </div>
-               </div>
-               <div class="col-md-6 pl-1">
-                  <div class="form-group">
-                     <label>Reciept Number</label>
-                     <input type="text" class="form-control" id="recipt_num" name="reciept_no" required placeholder="Enter The Recipt Number" >
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-6 pr-1">
-                  <div class="form-group">
-                     <label>Pending Amount</label>
-                     <input type="text" class="form-control" readonly id="due_fees" name="due_fees" required value="0.00" >
-                  </div>
-               </div>
-               <div class="col-md-6 pl-1">
-                  <div class="form-group">
-                     <label>Refrence By</label>
-                     <input type="text" class="form-control" placeholder="Enter the refrence" value="{{ !empty($enquiry) ? $enquiry->refrence : ''}}" name="refrence">
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="form-group">
-                     <label>Narration</label>
-                     <textarea class="form-control textarea" id="narration" name="narration">{{ !empty($enquiry) ? $enquiry->narration : ''}}</textarea>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="update ml-auto mr-auto">
-                  <button type="submit" class="btn btn-primary btn-round">Add Registration</button>
-               </div>
-            </div>
+            <div class="embed-responsive embed-responsive-16by9">
+               <iframe class="embed-responsive-item" src="{{ route('admin.registration.form') }}" allowfullscreen></iframe>
+             </div>
          </div>
       </div>
-    </form>
+   </form>
 </div>
-
 <script src="{{ asset('assets/semantic/dist/semantic.min.js') }}"></script>
 <script src="{{ asset('assets/select2/select2.min.js') }}"></script>
 <script>
-   
+   function formValid(){
+      var form = document.getElementById("myForm");
+      var is_valid = form.checkValidity();
+      
+      if(is_valid)
+      {
+         return true;
+      }
+      swal("Please enter the necessary details.")
+      return false;
+   }
+   $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();  
+   })
    $('#college,#semester,#degree').dropdown({
         clearable: true,
         
     });
-  
+    
+   
    $('#course').dropdown({
      placeholder:'Select the course',
      useLabels: false
@@ -278,6 +69,82 @@
          console.log(a.children);
    });
        
+   $('#myModal').on('hidden.bs.modal', function (e) {
+      e.preventDefault();
+     let name= $('input[name="name"]').val();
+     let gender = $('input[name="gender"]').val();
+     let fname = $('input[name="fname"]').val();
+   
+      if(name.length>0 && gender.length>0 && fname.length>0){
+         $("#stdinfo").removeClass("btn-danger");
+         $("#stdinfo").addClass("btn-success");
+      }
+      else{
+         $("#stdinfo").removeClass("btn-succes");
+         $("#stdinfo").addClass("btn-danger");
+      }
+   });
+   
+   
+   $('#myModal1').on('hidden.bs.modal', function (e) {
+   
+      e.preventDefault();
+     let course= $('#course').val();
+     let training_type = $('input[name="training_type"]').val();
+    
+   
+      if(course>0 && training_type.length>0){
+         $("#courseinfo").removeClass("btn-danger");
+         $("#courseinfo").addClass("btn-success");
+         
+      }
+      else{
+         $("#courseinfo").removeClass("btn-succes");
+         $("#courseinfo").addClass("btn-danger");
+      }
+   });
+   $('#myModal4').on('hidden.bs.modal', function (e) {
+   
+   
+   let registration_amount= $('#registration_amount').val();
+   let recipt_num = $('#recipt_num').val();
+   let installments = $('[name="installments"]').val();
+   console.log(registration_amount);
+   console.log(recipt_num);
+   console.log(installments);
+   if(registration_amount.length>0 && recipt_num.length>0 && installments.length>0){
+    $("#feesinfo").removeClass("btn-danger");
+    $("#feesinfo").addClass("btn-success");
+    
+   }
+   else{
+    $("#feesinfo").removeClass("btn-succes");
+    $("#feesinfo").addClass("btn-danger");
+   }
+   });
+   
+   $('#myModal2').on('hidden.bs.modal', function (e) {
+   
+   e.preventDefault();
+   let email= $('input[name="email"]').val();
+   let phoneno = $("input[name='phoneno']").val();
+   let address= $("#address").val();
+   let relationship_type = $("[name='relation_type']").val();
+   let alternate_phone = $("input[name='alternate_phone']").val();
+   
+   
+   
+   if(email.length>0 && phoneno.length>0 && address.length>0 
+                     && relationship_type.length>0 &&  alternate_phone.length>0 ){
+    $("#contactinfo").removeClass("btn-danger");
+    $("#contactinfo").addClass("btn-success");
+    
+   }
+   else{
+    $("#contactinfo").removeClass("btn-succes");
+    $("#contactinfo").addClass("btn-danger");
+   }
+   });
    
     
    $('#extra_charges,#discount,#fees').on('input', function() {
@@ -288,7 +155,7 @@
    
       
      calculateall();
-
+   
    
    });
    function calculateall()
@@ -296,11 +163,11 @@
     var total_fees = parseFloat($('#total_fees').val());
     
     var dom_fees = parseFloat($("#fees").val());
-
+   
     
-
+   
     var course_fees = parseFloat($('#course_fees').val());
-
+   
     $('#discount').val(course_fees-dom_fees);
    
     var dom_discount = parseFloat($('#discount').val());
@@ -310,9 +177,9 @@
     
    
       var dom_total_fees = course_fees+dom_extra_charges-dom_discount;
-
+   
       $('#discount').val(course_fees-dom_fees);
-
+   
        $('#total_fees').val(dom_total_fees);
        console.log(course_fees);
        console.log(dom_extra_charges);
@@ -322,12 +189,14 @@
       
    }
    $('#registration_amount').blur(function(){
-
+   
          var due_fees = parseFloat($('#total_fees').val())-parseFloat($(this).val());
          $('#due_fees').val(due_fees);
    });
        $('#course').on('change',function(){
-               
+   
+               let duration= $(this).find("option:selected").text().split("-")[1];
+              
                var id = $(this).val();
                $.ajax({
                    'url':'{{ route("api.course.getcourse") }}',
@@ -337,14 +206,13 @@
                        "course_id":id,
                    },
                    success:function(res){
+                 console.log(res);
                      
+                  var select = "<option selected='selected' value='"+res.duration_id+"'>"+duration+"</option>";
+                     $("#duration").html(select);
                      $('#total_fees').val(parseFloat(res["fees"]));
                      $('#course_fees').val(parseFloat(res["fees"]));
                      $('#fees').val(parseFloat(res["fees"]));
-                   
-                     
-   
-                     
                    },
                    error:function(){
                        console.log("course not found");
@@ -382,8 +250,6 @@
                    }
                });
        });
-   
-     
    
      
    

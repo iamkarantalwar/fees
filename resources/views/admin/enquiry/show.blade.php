@@ -40,7 +40,7 @@
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>College</label>
-                        <input type="text" disabled class="form-control" name="college" required placeholder="Enter the college" value="{{ $enquiry->college->college_name }}">
+                        <input type="text" disabled class="form-control" name="college" required placeholder="Enter the college" value="@if($enquiry->college!="") {{ $enquiry->college->college_name }}@else college info not available @endif ">
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
@@ -54,13 +54,13 @@
                       <div class="col-md-6 pr-1">
                         <div class="form-group">
                           <label>Degree</label>
-                          <input type="text" disabled class="form-control" name="college" required placeholder="Enter the college" value="{{ $enquiry->degree->name }}">
+                          <input type="text" disabled class="form-control" name="college" required placeholder="Enter the college" value="@if($enquiry->degree!="") {{ $enquiry->degree->name }}@else degree info not available @endif ">
                         </div>
                       </div>
                       <div class="col-md-6 pl-1">
                         <div class="form-group">
                           <label>Stream</label>
-                          <input type="text" disabled class="form-control" name="semester" required placeholder="Enter the semester" value="{{ $enquiry->stream }}">
+                          <input type="text" disabled class="form-control" name="semester" required placeholder="Stream info not available" value="{{ $enquiry->stream }}">
                         </div>
                       </div>
                     </div>

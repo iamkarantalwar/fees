@@ -10,7 +10,7 @@ class Enquiry extends Model
 	protected $table="enquiries";
     public function courses()
     {
-        return $this->belongsToMany('App\Course','course_enquiry','enquiry_id','course_id');
+        return $this->belongsToMany('App\Course','course_enquiry','enquiry_id','course_id')->withPivot(['discount']);
     }
     public function callings()
     {

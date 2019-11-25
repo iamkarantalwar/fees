@@ -18,6 +18,7 @@ class CreateCourseEnquiryTable extends Migration
            
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('enquiry_id');
+            $table->float('discount',10,2);
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('restrict');
             $table->foreign('enquiry_id')->references('id')->on('enquiries')->onDelete('restrict');
             $table->timestamps();
